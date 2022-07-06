@@ -1,0 +1,390 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2574F603-4B6C-4A30-BFDD-E3BC09EEDFDF}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TypeScriptHTMLApp1</RootNamespace>
+    <AssemblyName>TypeScriptHTMLApp1</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>10202</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>4.6</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES2021</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile>D:\Project\Web\room\www\js\code.js</TypeScriptOutFile>
+    <TypeScriptOutDir>D:\Project\Web\room\www\js\code.js</TypeScriptOutDir>
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot>
+    </TypeScriptMapRoot>
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="node_modules\types\threejs\three\renderers\shaders\ShaderChunk\" />
+    <Folder Include="node_modules\types\threejs\three\renderers\shaders\ShaderLib\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="node_modules\types\threejs\DDSLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\detector.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\DRACOLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\FBXLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\GLTFLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\MTLLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\OBJLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\oc.three.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\OrbitControls.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\SkeletonUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-canvasrenderer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-copyshader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-css3drenderer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-editorcontrols.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-effectcomposer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-FirstPersonControls.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-maskpass.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-orbitcontrols.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-orthographictrackballcontrols.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-outlinepass.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-pass.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-projector.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-renderpass.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-shaderpass.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-trackballcontrols.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-transformcontrols.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-unrealbloompass.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-vrcontrols.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-vreffect.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-webglcapabilities.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three-webglinfo.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\AnimationAction.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\AnimationClip.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\AnimationMixer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\AnimationObjectGroup.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\AnimationUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\KeyframeTrack.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\PropertyBinding.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\PropertyMixer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\tracks\BooleanKeyframeTrack.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\tracks\ColorKeyframeTrack.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\tracks\NumberKeyframeTrack.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\tracks\QuaternionKeyframeTrack.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\tracks\StringKeyframeTrack.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\animation\tracks\VectorKeyframeTrack.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\audio\Audio.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\audio\AudioAnalyser.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\audio\AudioContext.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\audio\AudioListener.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\audio\PositionalAudio.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\cameras\ArrayCamera.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\cameras\Camera.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\cameras\CubeCamera.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\cameras\OrthographicCamera.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\cameras\PerspectiveCamera.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\cameras\StereoCamera.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\constants.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\BufferAttribute.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\BufferGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\Clock.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\DirectGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\EventDispatcher.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\Face3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\Geometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\InstancedBufferAttribute.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\InstancedBufferGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\InstancedInterleavedBuffer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\InterleavedBuffer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\InterleavedBufferAttribute.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\Layers.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\Object3D.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\Raycaster.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\core\Uniform.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\core\Curve.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\core\CurvePath.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\core\Font.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\core\Interpolations.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\core\Path.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\core\Shape.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\core\ShapePath.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\ArcCurve.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\CatmullRomCurve3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\CubicBezierCurve.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\CubicBezierCurve3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\Curves.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\EllipseCurve.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\LineCurve.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\LineCurve3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\QuadraticBezierCurve.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\QuadraticBezierCurve3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\curves\SplineCurve.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\ImageUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\objects\ImmediateRenderObject.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\PMREMGenerator.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\extras\ShapeUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\BoxGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\CircleGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\ConeGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\CylinderGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\DodecahedronGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\EdgesGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\ExtrudeGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\Geometries.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\IcosahedronGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\LatheGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\OctahedronGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\ParametricGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\PlaneGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\PolyhedronGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\RingGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\ShapeGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\SphereGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\TetrahedronGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\TextGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\TorusGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\TorusKnotGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\TubeGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\geometries\WireframeGeometry.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\ArrowHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\AxesHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\Box3Helper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\BoxHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\CameraHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\DirectionalLightHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\GridHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\HemisphereLightHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\PlaneHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\PointLightHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\PolarGridHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\SkeletonHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\helpers\SpotLightHelper.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\AmbientLight.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\AmbientLightProbe.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\DirectionalLight.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\DirectionalLightShadow.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\HemisphereLight.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\HemisphereLightProbe.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\Light.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\LightProbe.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\LightShadow.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\PointLight.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\PointLightShadow.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\RectAreaLight.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\SpotLight.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\lights\SpotLightShadow.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\AnimationLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\AudioLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\BufferGeometryLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\Cache.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\CompressedTextureLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\CubeTextureLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\DataTextureLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\FileLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\FontLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\ImageBitmapLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\ImageLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\Loader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\LoaderUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\LoadingManager.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\MaterialLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\ObjectLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\loaders\TextureLoader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\LineBasicMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\LineDashedMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\Material.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\Materials.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshBasicMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshDepthMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshDistanceMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshLambertMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshMatcapMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshNormalMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshPhongMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshPhysicalMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshStandardMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\MeshToonMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\PointsMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\RawShaderMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\ShaderMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\ShadowMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\materials\SpriteMaterial.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Box2.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Box3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Color.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Cylindrical.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Euler.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Frustum.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Interpolant.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\interpolants\CubicInterpolant.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\interpolants\DiscreteInterpolant.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\interpolants\LinearInterpolant.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\interpolants\QuaternionLinearInterpolant.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Line3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\MathUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Matrix3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Matrix4.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Plane.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Quaternion.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Ray.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Sphere.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Spherical.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\SphericalHarmonics3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Triangle.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Vector2.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Vector3.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\math\Vector4.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\Bone.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\Group.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\InstancedMesh.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\Line.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\LineLoop.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\LineSegments.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\LOD.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\Mesh.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\Points.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\Skeleton.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\SkinnedMesh.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\objects\Sprite.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\polyfills.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\shaders\ShaderChunk.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\shaders\ShaderLib.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\shaders\UniformsLib.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\shaders\UniformsUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\WebGLCubeRenderTarget.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\WebGLMultisampleRenderTarget.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\WebGLRenderer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\WebGLRenderTarget.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLAnimation.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLAttributes.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLBackground.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLBufferRenderer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLCapabilities.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLClipping.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLExtensions.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLGeometries.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLIndexedBufferRenderer.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLInfo.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLLights.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLMaterials.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLMorphtargets.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLObjects.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLProgram.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLPrograms.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLProperties.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLRenderLists.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLRenderStates.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLShader.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLShadowMap.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLState.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLTextures.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLUniforms.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webgl\WebGLUtils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webxr\WebXRController.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\renderers\webxr\WebXRManager.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\scenes\Fog.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\scenes\FogExp2.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\scenes\Scene.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\CanvasTexture.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\CompressedTexture.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\CubeTexture.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\DataTexture.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\DataTexture2DArray.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\DataTexture3D.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\DepthTexture.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\Texture.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\textures\VideoTexture.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\Three.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\Three.Legacy.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\threejs\three\utils.d.ts" />
+    <TypeScriptCompile Include="node_modules\types\Tweener.d.ts" />
+    <TypeScriptCompile Include="src\room\appmain\Main.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>10202</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:10203/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://localhost/allseated/AllseatedModules/allseatedweb/wwwprod/</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
