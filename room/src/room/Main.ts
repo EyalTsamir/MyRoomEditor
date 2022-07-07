@@ -17,7 +17,7 @@ module room {
         //______________________________________
 
         private update(aDiv: HTMLElement) {
-            let aPOS = Math.sin(this.mCounter / 180 * Math.PI) * 200 + 800
+            let aPOS = Math.sin(this.mCounter / 180 * Math.PI) * 200 + 500
             this.mCounter += 1;
             this.mMainDiv.innerHTML = "Eyal " + this.mCounter;
             if (this.mCounter == 1800) {
