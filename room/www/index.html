@@ -7,12 +7,23 @@
     <script src="js/code.js"></script>
 </head>
 <body>
-    <div id="main_div" style="position:absolute; top:20px; left:20px;border:dashed; padding:10px; border-color:#b6ff00">
+
+    <div>
+        <label style="font-size: 20px">Furniture menu</label>
+        <br />
+        <div id="side_menu_div" style=" bottom: 20px; top: 80px; position: absolute; overflow: scroll; border: dashed; width: 150px; ">
+            <div id="item" style="position:absolute; left:20px;border:dashed; padding:5px; border-color:darkred">
+                <label>Furniture name</label>
+                <br />
+                <img src="images/303024.jpg" id="main_img" style=" width:50px" />
+            </div>
+        </div>
     </div>
+
+
     <script>
         function onPageLoad() {
-            let aMainDiv = document.getElementById("main_div");
-            mAllSeatedModule = new room.Main(aMainDiv);
+            mAllSeatedModule = new room.Main();
         }
         window.onload = onPageLoad;
 

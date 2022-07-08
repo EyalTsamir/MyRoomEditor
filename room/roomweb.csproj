@@ -76,9 +76,16 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="www\index.html" />
+    <Content Include="www\js\code.js.map" />
+    <Content Include="www\js\code.map" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="www\images\303024.jpg" />
     <Content Include="Web.config" />
+    <Content Include="www\js\code.js" />
+    <Content Include="www\js\Tweener.js" />
+    <Content Include="www\js\TweenJS.js" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -88,6 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="node_modules\types\Tweener.d.ts" />
+    <TypeScriptCompile Include="src\room\EditorManager.ts" />
+    <TypeScriptCompile Include="src\room\SidePanel.ts" />
     <TypeScriptCompile Include="src\room\Main.ts" />
   </ItemGroup>
   <PropertyGroup>
