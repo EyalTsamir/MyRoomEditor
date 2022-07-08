@@ -4,18 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Room Editor </title>
+    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-auth.js"></script>
     <script src="js/code.js"></script>
 </head>
 <body>
+    <div id="login_and_register" style=" top:80px; left: 700px; position:absolute; font-size:30px; display:none">
+        <div id="login">
 
-    <div>
+            <form action="/action_page.php">
+                <label for="fname">User name:   </label>
+                <input type="text" id="IdUserName" name="NameUserName" value="ValueUserName" style="height:30px"><br>
+                <label for="fname">password:   </label>
+                <input type="text" id="Idpassword" name="Namepassword" value="Valuepassword" style="height:30px"><br>
+                <input type="submit" value="Submit" style="position: absolute; left: 132.23px; top: 100px">
+            </form>
+
+            <div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="3D_Page" style="">
         <label style="font-size: 20px">Furniture menu</label>
         <br />
         <div id="side_menu_div" style=" bottom: 20px; top: 80px; position: absolute; overflow: scroll; border: dashed; width: 150px; ">
             <div id="item" style="position:absolute; left:20px;border:dashed; padding:5px; border-color:darkred">
                 <label>Furniture name</label>
                 <br />
-                <img src="images/303024.jpg" id="main_img" style=" width:50px" />
+                <img src="images/303024.jpg" id="main_img" style=" width:80px; height: 80px" />
             </div>
         </div>
     </div>

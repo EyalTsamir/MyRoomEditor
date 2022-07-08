@@ -8,11 +8,13 @@ namespace room {
 
         constructor()
         {
-            this.mEditorManager = new EditorManager();
+            FireBaseProxy.instance();
+            setTimeout(() => this.openEditorManager(), 2000);
         }
         //______________________________________
 
-        private update(aDiv: HTMLElement) {
+        private openEditorManager() {
+            this.mEditorManager = new EditorManager();
         }
 
         

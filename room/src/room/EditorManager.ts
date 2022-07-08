@@ -10,6 +10,7 @@ namespace room {
         {
             this.createSidePanel();
         }
+        //______________________________________
 
         private createSidePanel()
         {

@@ -2,32 +2,34 @@
 
 namespace room {
 
-    export class SidePanel
-    {
+    export class SidePanel {
 
         public mItemDiv: HTMLElement;
         public mSideMenuDiv: HTMLElement;
 
 
-        constructor(iMain_item: HTMLElement, iSide_menu_div: HTMLElement) {
-            this.mItemDiv = iMain_item;
-            this.mSideMenuDiv = iSide_menu_div;
-            let aDiv = this.mItemDiv.cloneNode(true) as HTMLElement;
-            this.mSideMenuDiv.removeChild(iMain_item);
+        constructor(iItemDiv: HTMLElement, iSideMenuDiv: HTMLElement) {
+            this.mItemDiv = iItemDiv;
+            this.mSideMenuDiv = iSideMenuDiv;
+
+            FireBaseProxy.instance().getItemsCatalog((iItemsData: any) => this.buildSidePanel(iItemsData))
+        }
+        //___________________________________________________________
+
+        private buildSidePanel(iItemsData:any) {
+            let aItem = this.mItemDiv.cloneNode(true) as HTMLElement;
+            this.mSideMenuDiv.removeChild(this.mItemDiv);
             let atop = 20;
-            for (var i = 0; i < 10; i++) {
-                aDiv = this.mItemDiv.cloneNode(true) as HTMLElement;
-                aDiv.style.top = atop + "px";
-                this.mSideMenuDiv.appendChild(aDiv);
-                atop += 100;
+            for (let key in iItemsData) {
+                aItem = this.mItemDiv.cloneNode(true) as HTMLElement;
+                let aLabels = aItem.getElementsByTagName("label");
+                let aImgs = aItem.getElementsByTagName("img");
+                aImgs[0].src = iItemsData[key].Thumbnails;
+                aLabels[0].innerHTML = iItemsData[key].name;
+                aItem.style.top = atop + "px";
+                this.mSideMenuDiv.appendChild(aItem);
+                atop += 140;
             }
         }
-        //______________________________________
-
-        
-
-        
-
-        
     }
 }
