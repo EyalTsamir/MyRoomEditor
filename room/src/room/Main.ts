@@ -9,7 +9,8 @@ namespace room {
         constructor()
         {
             FireBaseProxy.instance();
-            setTimeout(() => this.openEditorManager(), 2000);
+            new Room3D();
+            setTimeout(() => this.openEditorManager(), 1000);
         }
         //______________________________________
 

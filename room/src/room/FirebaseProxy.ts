@@ -45,7 +45,6 @@ module room {
             aItemsCatalogRef.on("value",
                 (iData) => { iCallback(iData.val());}
             );
-            let i = 9;
         }
         //________________________________________________________
 
