@@ -43,7 +43,7 @@ namespace room {
 
         private createController() {
             // @ts-ignore
-            this.mOrbitControls = new (THREE as any).OrbitControls(this.mCamera, this.mRenderer.domElement);
+            this.mOrbitControls = new THREE.OrbitControls(this.mCamera, this.mRenderer.domElement);
             this.mOrbitControls.target.set(0, 0.5, 0);
             this.mOrbitControls.update();
             this.mOrbitControls.enablePan = false;
