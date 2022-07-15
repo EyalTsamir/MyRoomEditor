@@ -12,25 +12,25 @@
     <script src="js/code.js"></script>
 </head>
 <body>
-    <div id="login_and_register" style=" top:80px; left: 700px; position:absolute; font-size:30px; display:none">
+    <div id="login_and_register" style=" top:80px; left: 700px; position:absolute; font-size:30px;">
         <div id="login">
+            <div id="failLogin" style="color:red; display:none"> Your username or password is incorrect </div>
 
-            <form action="/action_page.php">
-                <label for="fname">User name:   </label>
-                <input type="text" id="IdUserName" name="NameUserName" value="ValueUserName" style="height:30px"><br>
-                <label for="fname">password:   </label>
-                <input type="text" id="Idpassword" name="Namepassword" value="Valuepassword" style="height:30px"><br>
-                <input type="submit" value="Submit" style="position: absolute; left: 132.23px; top: 100px">
-            </form>
+            <div>
+                <label>User name:   </label>
+                <input type="text" value="eyal1163" id="IdUserName" placeholder="enter user name" style="height:30px"><br>
+                <label>password:     </label>
+                <input type="text" value="123456" id="Idpassword" placeholder="enter password" style="height:30px"><br>
+                <button id="loginBotton" style="position: absolute; left: 132.23px; top: 100px">login</button>
+            </div>
 
             <div>
 
             </div>
         </div>
+
     </div>
-
-
-    <div id="3D_page" style="">
+    <div id="3D_page" style=" display: none">
         <label style="font-size: 20px">Furniture menu</label>
         <div id="side_menu_div" style="bottom: 20px; top: 40px; position: absolute; overflow-y: scroll; border: solid; width: 130px; filter: drop-shadow(2px 2px 2px #806080); ">
             <div id="item" style="position:absolute; left:5px; border-color:darkred">
@@ -42,15 +42,15 @@
         <div id="3D_room" style="bottom: 20px; top: 40px; position: absolute; overflow: hidden; border: solid; left: 150px; right: 20px; ">
 
         </div>
+    </div>
 
+    <script>
+        function onPageLoad() {
+            mAllSeatedModule = new room.Main();
+        }
+        window.onload = onPageLoad;
 
-        <script>
-            function onPageLoad() {
-                mAllSeatedModule = new room.Main();
-            }
-            window.onload = onPageLoad;
-
-        </script>
+    </script>
 </body>
 </html>
 

@@ -2,60 +2,135 @@ namespace room {
 
     export class Room3D {
 
+        protected static readonly Y_FLOOR = 0;
+        protected static readonly HEIGHT = 10;
+        protected static readonly WALL_WIDTH = 0.2;
         protected mCamera: THREE.PerspectiveCamera;
         protected mScene: THREE.Scene;
+        //אלמנט ציור
         protected mRenderer: THREE.WebGLRenderer;
+
         // @ts-ignore
         protected mOrbitControls: THREE.OrbitControls;
 
-        protected mCube: THREE.Mesh;
+        protected mWalls: Array<THREE.Mesh>;
 
         constructor() {
+            //יצירת סצנה
             this.createScene();
-            this.createController();
-            this.createRoom();
+
+            // יצירת קונטרולר
+            this.createController(); 
+            
+            //אנימציה
             this.animate();
+
+            this.mWalls = new Array<THREE.Mesh>();
         }
         //__________________________________________________________________
 
         private createScene() {
-            const aContainer = document.getElementById('3D_room');
+            const aDiv3D = document.getElementById('3D_room');
             this.mRenderer = new THREE.WebGLRenderer({ antialias: true });
-            const aRect = aContainer.getBoundingClientRect();
+            const aRect = aDiv3D.getBoundingClientRect();
             this.mRenderer.setSize(aRect.width, aRect.height);
-            aContainer.appendChild(this.mRenderer.domElement);
+            aDiv3D.appendChild(this.mRenderer.domElement);
 
-            // ????? ?????
             this.mScene = new THREE.Scene();
             this.mScene.background = new THREE.Color(0xbfe3dd);
-            this.mCamera = new THREE.PerspectiveCamera(60, aRect.width / aRect.height, 1, 100);
-            this.mCamera.position.set(5, 2, 8);
+            this.mCamera = new THREE.PerspectiveCamera(60, aRect.width / aRect.height, 1, 300);
+            this.mCamera.position.set(5, 13, -8);
 
-            // ????? ??????
-            const aDirectionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            aDirectionalLight.position.x = 40;
-            aDirectionalLight.position.y = 30;
-            aDirectionalLight.position.z = 20;
+            const aDirectionalLight = new THREE.PointLight(0xffefbf, 1);
+            aDirectionalLight.position.x = 0;
+            aDirectionalLight.position.y = 8;
+            aDirectionalLight.position.z = 0;
             aDirectionalLight.lookAt(0, 0, 0);
             this.mScene.add(aDirectionalLight);
+
+
+
+            /*const aDirectionalLightDown = new THREE.DirectionalLight(0xffffff, 1);
+            aDirectionalLightDown.position.x = 40;
+            aDirectionalLightDown.position.y = -30;
+            aDirectionalLightDown.position.z = 20;
+            aDirectionalLightDown.lookAt(0, 0, 0);
+            this.mScene.add(aDirectionalLightDown);*/
         }
         //___________________________________________________________________________
 
         private createController() {
             // @ts-ignore
             this.mOrbitControls = new THREE.OrbitControls(this.mCamera, this.mRenderer.domElement);
-            this.mOrbitControls.target.set(0, 0.5, 0);
-            this.mOrbitControls.update();
+            this.mOrbitControls.target.set(0, (Room3D.Y_FLOOR + Room3D.HEIGHT)/2, 0);
             this.mOrbitControls.enablePan = false;
             this.mOrbitControls.enableDamping = true;
         }
         //___________________________________________________________________________
 
-        private createRoom() {
-            const geometry = new THREE.BoxGeometry(3, 1, 3, 10, 10, 10);
-            const material = new THREE.MeshPhongMaterial();
-            this.mCube = new THREE.Mesh(geometry, material);
-            this.mScene.add(this.mCube);
+        public createRoom(iWidth: number, iLength: number) {
+            while (this.mWalls.length > 0) {
+                this.mScene.remove(this.mWalls.pop());
+            }
+            let aGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            let aMaterial = new THREE.MeshPhongMaterial();
+            const aCube = new THREE.Mesh(aGeometry, aMaterial);
+            aCube.position.x = 0;
+            aCube.position.y = 0;
+            aCube.position.z = 0;
+
+
+            aGeometry = new THREE.BoxGeometry(iWidth, Room3D.WALL_WIDTH, iLength);
+            aMaterial = new THREE.MeshPhongMaterial();
+            const afloor = new THREE.Mesh(aGeometry, aMaterial);
+            afloor.position.y = Room3D.Y_FLOOR;
+
+            aGeometry = new THREE.BoxGeometry(iWidth, Room3D.WALL_WIDTH, iLength);
+            aMaterial = new THREE.MeshPhongMaterial();
+            const aTop = new THREE.Mesh(aGeometry, aMaterial);
+            aTop.position.y = Room3D.Y_FLOOR + Room3D.HEIGHT;
+
+            aGeometry = new THREE.BoxGeometry(Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, iLength);
+            aMaterial = new THREE.MeshPhongMaterial();
+            const aWall = new THREE.Mesh(aGeometry, aMaterial);
+            aWall.position.x = iWidth / 2;
+            aWall.position.y = Room3D.HEIGHT / 2;
+
+            aGeometry = new THREE.BoxGeometry(0.2, Room3D.HEIGHT + Room3D.WALL_WIDTH, iLength);
+            aMaterial = new THREE.MeshPhongMaterial();
+            const aWall2 = new THREE.Mesh(aGeometry, aMaterial);
+            aWall2.position.x = -1 * iWidth / 2;
+            aWall2.position.y = Room3D.HEIGHT / 2;
+
+            aGeometry = new THREE.BoxGeometry(iWidth + Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, 0.2);
+            aMaterial = new THREE.MeshPhongMaterial();
+            const aWall3 = new THREE.Mesh(aGeometry, aMaterial);
+            aWall3.position.z = -1 * iLength / 2;
+            aWall3.position.y = Room3D.HEIGHT / 2;
+
+            aGeometry = new THREE.BoxGeometry(iWidth + Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, 0.2);
+            aMaterial = new THREE.MeshPhongMaterial();
+            const aWall4 = new THREE.Mesh(aGeometry, aMaterial);
+            aWall4.position.z = iLength / 2;
+            aWall4.position.y = Room3D.HEIGHT / 2;
+
+            this.mWalls.push(aTop)
+            this.mWalls.push(afloor);
+            this.mWalls.push(aWall);
+            this.mWalls.push(aWall2);
+            this.mWalls.push(aWall3);
+            this.mWalls.push(aWall4);
+
+            this.mScene.add(afloor);
+            //this.mScene.add(aTop);
+            this.mScene.add(aCube);
+            this.mScene.add(aWall);
+            this.mScene.add(aWall2);
+            this.mScene.add(aWall3);
+            this.mScene.add(aWall4);
+
+
+
         }
         //___________________________________________________________________________
 

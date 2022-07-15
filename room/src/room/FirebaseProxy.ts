@@ -38,28 +38,45 @@ module room {
         }
         //________________________________________________________
 
-        public getItemsCatalog(iCallback: Function)
-        {
+        public getItemsCatalog(iCallback: Function) {
             let aItemsCatalogRef = this.mDB.ref("ItemsCatalog");
-
-            aItemsCatalogRef.on("value",
-                (iData) => { iCallback(iData.val());}
-            );
-        }
-        //________________________________________________________
-
-        public getUserPassword(iUserName:string,iCallback: Function) {
-            let aItemsCatalogRef = this.mDB.ref("users/" + iUserName);
 
             aItemsCatalogRef.on("value",
                 (iData) => { iCallback(iData.val()); }
             );
-            let i = 9;
+        }
+        //________________________________________________________
+
+        public getUserCodeHelper(iUserName: string, iPassword: string, iCallback: Function) {
+            let aItemsCatalogRef = this.mDB.ref("users/" + iUserName + "/_password");
+
+            aItemsCatalogRef.on("value",
+                (iData) => { this.getUserCode(iCallback, iPassword, iData.val()); }
+            );
+        }
+        //___________________________________________
+
+        public getUserCode(iCallback: Function, iPassword: string, iDataVal,) {
+            if (iDataVal == iPassword) {
+                iCallback(true)
+            } else {
+                iCallback(false)
+            }
+
+        }
+        //_________________________________________________
+
+        public getUserData(iUserName: string, iCallback: Function) {
+            let aUserData = this.mDB.ref("users/" + iUserName);
+
+            aUserData.on("value",
+                (iData) => {iCallback(iData.val()); }
+            );
         }
         //____________________________________________________
-        private async onGetCollabAuthId(snap) {}
+        private async onGetCollabAuthId(snap) { }
         //____________________________________________________
-        private async failGetCollabAuthId(error) {}
+        private async failGetCollabAuthId(error) { }
         //______________________________________
 
 

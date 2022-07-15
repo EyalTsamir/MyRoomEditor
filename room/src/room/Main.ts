@@ -5,17 +5,26 @@ namespace room {
     export class Main {
 
         private mEditorManager: EditorManager;
+        public mLogin: Login;
+
 
         constructor()
         {
+            this.createLogin();
             FireBaseProxy.instance();
-            new Room3D();
-            setTimeout(() => this.openEditorManager(), 1000);
+            
+            
         }
         //______________________________________
 
-        private openEditorManager() {
-            this.mEditorManager = new EditorManager();
+        private createLogin() {
+            let aLoginMenu = document.getElementById("login_and_register");
+            this.mLogin = new Login(aLoginMenu, (iUserCode: string) => this.openEditorManager(iUserCode));
+        }
+        //__________________________________________
+
+        private openEditorManager(iUserCode:string) {
+            this.mEditorManager = new EditorManager(iUserCode);
         }
 
         
