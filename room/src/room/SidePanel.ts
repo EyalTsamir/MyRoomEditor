@@ -7,6 +7,8 @@ namespace room {
 
         private mItemDiv: HTMLElement;
         private mSideMenuDiv: HTMLElement;
+        private mCatalog: any;
+
 
 
         constructor(iItemDiv: HTMLElement, iSideMenuDiv: HTMLElement) {
@@ -18,6 +20,7 @@ namespace room {
         //___________________________________________________________
 
         private buildSidePanel(iItemsData: any) {
+            this.mCatalog = iItemsData;
             const SPACE = 120;
             let aTop = 5;
             let aItem = this.mItemDiv.cloneNode(true) as HTMLElement;
@@ -30,7 +33,30 @@ namespace room {
                 aItem.style.top = aTop + "px";
                 this.mSideMenuDiv.appendChild(aItem);
                 aTop += SPACE;
+                aImgs[0].addEventListener("click", () => this.sendFurnitureToBuild(key))
             }
+        }
+        // Refactor - move to EditorManager
+        private sendFurnitureToBuild(iname: string) {
+            let aObject : any = {};
+            aObject.itemName = iname;
+            aObject.position = {};
+            aObject.position.x = 0;
+            aObject.position.y = 0;
+            aObject.position.z = 0;
+            aObject.rotationY = 90;
+            aObject.scale = {};
+            aObject.scale.x = 0.05;
+            aObject.scale.y = 0.05;
+            aObject.scale.z = 0.05;
+            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", "2", aObject);
+
+
+
+        }
+
+        public getModelURL(iItemName: string): string {
+            return this.mCatalog[iItemName].model;
         }
     }
 }

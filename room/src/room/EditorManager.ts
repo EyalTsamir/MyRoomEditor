@@ -16,7 +16,7 @@ namespace room {
             this.m3Dpage.style.display = "block";
             this.createSidePanel();
             this.mRoom3D = new Room3D();
-            this.getRoomData();
+            this.LoadRoomData();
 
         }
         //______________________________________
@@ -32,18 +32,26 @@ namespace room {
         }
         //______________________________________
 
-        private getRoomData() {
-            FireBaseProxy.instance().getUserData(this.mUserCode, (iData: any) => this.readRoomData(iData));
+        private LoadRoomData() {
+            FireBaseProxy.instance().getUserData(this.mUserCode, (iData: any) => this.LoadRoomDataHelper(iData));
+
         }
 
-        private readRoomData(iData:any) {
+        private LoadRoomDataHelper(iData:any) {
             this.mRoomData = iData;
             let alength = this.mRoomData.Metadata.size.length
             let aWidth = this.mRoomData.Metadata.size.width
             this.mRoom3D.createRoom(aWidth, alength);
-
+            this.buildRoomFurniture(this.mRoomData.furniture);
         }
 
+        private buildRoomFurniture(iData: Array<any>) {
+            let URL: string;
+            for (var i = 0; i < iData.length; i++) {
+                URL = this.mSidePanel.getModelURL(iData[i].itemName)
+                this.mRoom3D.addModel(URL, iData[i])
+            }
+        }
 
 
         

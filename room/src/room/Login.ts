@@ -24,7 +24,7 @@ namespace room {
         {
             this.mUserName = (document.getElementById("IdUserName") as HTMLInputElement).value;
             let aPassword = (document.getElementById("Idpassword") as HTMLInputElement).value;
-            FireBaseProxy.instance().getUserCodeHelper(this.mUserName, aPassword, (UserCode: any) => this.Load(UserCode))
+            FireBaseProxy.instance().passwordVerification(this.mUserName, aPassword, (UserCode: any) => this.Load(UserCode))
            
         }
         //______________________________________

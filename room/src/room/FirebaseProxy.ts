@@ -47,30 +47,37 @@ module room {
         }
         //________________________________________________________
 
-        public getUserCodeHelper(iUserName: string, iPassword: string, iCallback: Function) {
+        public passwordVerification(iUserName: string, iPassword: string, iIsUserExsistCallback: Function) {
             let aItemsCatalogRef = this.mDB.ref("users/" + iUserName + "/_password");
 
             aItemsCatalogRef.on("value",
-                (iData) => { this.getUserCode(iCallback, iPassword, iData.val()); }
+                (iData) => { this.passwordVerificationHelper(iIsUserExsistCallback, iPassword, iData.val()); }
             );
         }
         //___________________________________________
 
-        public getUserCode(iCallback: Function, iPassword: string, iDataVal,) {
+        public passwordVerificationHelper(iIsUserExsistCallback: Function, iPassword: string, iDataVal,) {
             if (iDataVal == iPassword) {
-                iCallback(true)
+                iIsUserExsistCallback(true)
             } else {
-                iCallback(false)
+                iIsUserExsistCallback(false)
             }
-
         }
         //_________________________________________________
 
-        public getUserData(iUserName: string, iCallback: Function) {
-            let aUserData = this.mDB.ref("users/" + iUserName);
+        public getUserData(iUserCode: string, iCallback: Function) {
+            let aUserData = this.mDB.ref("users/" + iUserCode);
 
             aUserData.on("value",
                 (iData) => {iCallback(iData.val()); }
+            );
+        }
+        //________________________________________________________
+
+        public updateData(iTo: string, iChild: string, iData: any) {
+            let aDataRef = this.mDB.ref(iTo);
+            aDataRef.child(iChild).update(iData,
+                (iError) => { console.log(iError); }
             );
         }
         //____________________________________________________

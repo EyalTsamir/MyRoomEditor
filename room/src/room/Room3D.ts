@@ -47,15 +47,25 @@ namespace room {
             aDirectionalLight.position.z = 0;
             aDirectionalLight.lookAt(0, 0, 0);
             this.mScene.add(aDirectionalLight);
+        }
+        //___________________________________________________________________________
+        
+        public addModel(iURL: string, iData: any) {
+            const aLoader = new THREE.GLTFLoader();
+            aLoader.load(iURL, (iModel) => this.loadModelHelper(iModel, iData));
+        }
+        //___________________________________________________________________________
 
-
-
-            /*const aDirectionalLightDown = new THREE.DirectionalLight(0xffffff, 1);
-            aDirectionalLightDown.position.x = 40;
-            aDirectionalLightDown.position.y = -30;
-            aDirectionalLightDown.position.z = 20;
-            aDirectionalLightDown.lookAt(0, 0, 0);
-            this.mScene.add(aDirectionalLightDown);*/
+        private loadModelHelper(iModel, iData: any ) {
+            let aModel: THREE.Object3D = iModel.scene;
+            this.mScene.add(aModel);
+            aModel.position.x = iData.position.x;
+            aModel.position.y = iData.position.y;
+            aModel.position.z = iData.position.z;
+            aModel.scale.x = iData.scale.x;
+            aModel.scale.y = iData.scale.y;
+            aModel.scale.z = iData.scale.z;
+            aModel.rotateY((iData.rotationY/180) * Math.PI);
         }
         //___________________________________________________________________________
 
