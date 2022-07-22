@@ -5,48 +5,60 @@ namespace room {
     export class FurnitureMenu {
 
 
-        private mFurnitureMenuNext: FurnitureMenu;
-        private mInformation: FurnitureInformation;
-        private mEditPanelDiv: HTMLElement; 
+        private mFurniture: Furniture;
+        private mEditPanelDiv: HTMLElement;
+        private mPositionXInput: HTMLInputElement
+        private mPositionYInput: HTMLInputElement
+        private mPositionZInput: HTMLInputElement
+        private mRotationYInput: HTMLInputElement
+        private mScaleXInput: HTMLInputElement
+        private mScaleYInput: HTMLInputElement
+        private mScaleZInput: HTMLInputElement
+        private mNameFurnitureDiv: HTMLElement;
+        private mButton: HTMLElement;
 
 
-        constructor(iDataFurniture: any, iFather: FurnitureMenu) {
-            if (iFather != null)
-            {
-                iFather.setNext(new FurnitureMenu(iDataFurniture, null));
-            } else {
-                this.mInformation = new FurnitureInformation(iDataFurniture);
-            }
-            if (0 == 0) { // קריאה לפתיחת חלונית העריכה (אונקליק)
 
-            }
-        }
 
-        getNext(): FurnitureMenu {
-            return this.mFurnitureMenuNext;
-        }
-
-        setNext(iFurnitureMenuNext: FurnitureMenu) {
-            this.mFurnitureMenuNext = iFurnitureMenuNext;
-        }
-
-        openEditPanelDiv() {
+        constructor() {
+            this.mPositionXInput = document.getElementById("PositionX") as HTMLInputElement
+            this.mPositionYInput = document.getElementById("PositionY") as HTMLInputElement
+            this.mPositionZInput = document.getElementById("PositionZ") as HTMLInputElement
+            this.mRotationYInput = document.getElementById("RotationY") as HTMLInputElement
+            this.mScaleXInput = document.getElementById("ScaleX") as HTMLInputElement
+            this.mScaleYInput = document.getElementById("ScaleY") as HTMLInputElement
+            this.mScaleZInput = document.getElementById("ScaleZ") as HTMLInputElement
             this.mEditPanelDiv = document.getElementById("Furniture_menu");
-            let aNameDiv = document.getElementById("NameOfEditedFurniture");
-            aNameDiv.innerHTML = this.mInformation.getName();
+            this.mNameFurnitureDiv = document.getElementById("NameOfEditedFurniture");
+            this.mButton = document.getElementById("EditButton");
+            this.mButton.onclick = () => this.onclic();
+        }
 
-            (document.getElementById("PositionX") as HTMLInputElement).value = "" + this.mInformation.getPositionX();
-            (document.getElementById("PositionY") as HTMLInputElement).value = "" + this.mInformation.getPositionY();
-            (document.getElementById("PositionZ") as HTMLInputElement).value = "" + this.mInformation.getPositionZ();
-            (document.getElementById("RotationY") as HTMLInputElement).value = "" + this.mInformation.getRotationY();
-            (document.getElementById("ScaleX") as HTMLInputElement).value = "" + this.mInformation.getPositionX();
-            (document.getElementById("ScaleY") as HTMLInputElement).value = "" + this.mInformation.getPositionY();
-            (document.getElementById("ScaleZ") as HTMLInputElement).value = "" + this.mInformation.getPositionZ();
-            let aaa = document.getElementById("PositionX");
 
-        //___________________________________________________________
+        public openEditPanelDiv(iFurniture: Furniture) {
+            this.mFurniture = iFurniture;
+            this.mEditPanelDiv.style.display = "block";
+            this.mNameFurnitureDiv.innerHTML = this.mFurniture.getName();
+            this.mPositionXInput.value = "" + this.mFurniture.getPositionX();
+            this.mPositionYInput.value = "" + this.mFurniture.getPositionY();
+            this.mPositionZInput.value = "" + this.mFurniture.getPositionZ();
+            this.mRotationYInput.value = "" + this.mFurniture.getRotationY();
+            this.mScaleXInput.value = "" + this.mFurniture.getPositionX();
+            this.mScaleYInput.value = "" + this.mFurniture.getPositionY();
+            this.mScaleZInput.value = "" + this.mFurniture.getPositionZ();
 
-        //___________________________________________________________
 
+        }
+        private onclic() {
+            this.mFurniture.setPositionX(parseInt(this.mPositionXInput.value));
+            this.mFurniture.setPositionY(parseInt(this.mPositionYInput.value));
+            this.mFurniture.setPositionZ(parseInt(this.mPositionZInput.value));
+            this.mFurniture.setRotationY(parseInt(this.mRotationYInput.value));
+            this.mFurniture.setScaleX(parseInt(this.mScaleXInput.value));
+            this.mFurniture.setScaleY(parseInt(this.mScaleYInput.value));
+            this.mFurniture.setScaleZ(parseInt(this.mScaleZInput.value));
+            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndex().toString(), this.mFurniture.getObject());
+
+        }
     }
 }

@@ -8,10 +8,12 @@ namespace room {
         private mItemDiv: HTMLElement;
         private mSideMenuDiv: HTMLElement;
         private mCatalog: any;
+        private mEditorManager: EditorManager;
 
 
 
-        constructor(iItemDiv: HTMLElement, iSideMenuDiv: HTMLElement) {
+        constructor(iItemDiv: HTMLElement, iSideMenuDiv: HTMLElement, iEditorManager: EditorManager) {
+            this.mEditorManager = iEditorManager;
             this.mItemDiv = iItemDiv;
             this.mSideMenuDiv = iSideMenuDiv;
             this.mSideMenuDiv.removeChild(this.mItemDiv);
@@ -33,26 +35,8 @@ namespace room {
                 aItem.style.top = aTop + "px";
                 this.mSideMenuDiv.appendChild(aItem);
                 aTop += SPACE;
-                aImgs[0].addEventListener("click", () => this.sendFurnitureToBuild(key))
+                aImgs[0].addEventListener("click", () => this.mEditorManager.sendFurnitureToBuild(key, this.mCatalog))
             }
-        }
-        // Refactor - move to EditorManager
-        private sendFurnitureToBuild(iname: string) {
-            let aObject : any = {};
-            aObject.itemName = iname;
-            aObject.position = {};
-            aObject.position.x = 0;
-            aObject.position.y = 0;
-            aObject.position.z = 0;
-            aObject.rotationY = 90;
-            aObject.scale = {};
-            aObject.scale.x = 0.05;
-            aObject.scale.y = 0.05;
-            aObject.scale.z = 0.05;
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", "2", aObject);
-
-
-
         }
 
         public getModelURL(iItemName: string): string {

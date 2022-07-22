@@ -2,8 +2,8 @@
 
 namespace room {
 
-    export class FurnitureInformation {
-
+    export class Furniture {
+        private mIndex: number;
         private mName: string;
         private mPositionX: number;
         private mPositionY: number;
@@ -12,10 +12,12 @@ namespace room {
         private mScaleX: number;
         private mScaleY: number;
         private mScaleZ: number;
+        private mNext: Furniture;
+        private mModel3D: THREE.Object3D;
 
 
 
-        constructor(iDataFurniture: any) {
+        constructor(iDataFurniture: any,) {
             this.mName = iDataFurniture.itemName;
             this.mPositionX = iDataFurniture.position.x;
             this.mPositionY = iDataFurniture.position.y;
@@ -25,10 +27,52 @@ namespace room {
             this.mScaleY = iDataFurniture.scale.y;
             this.mScaleZ = iDataFurniture.scale.z;
         }
+        //___________________________________________________________ Get Object
+
+        public getObject(): any {
+            let aObject: any = {};
+            aObject.itemName = this.mName;
+            aObject.position = {};
+            aObject.position.x = this.mPositionX;
+            aObject.position.y = this.mPositionY;
+            aObject.position.z = this.mPositionZ;
+            aObject.rotationY = this.mRotationY;
+            aObject.scale = {};
+            aObject.scale.x = this.mScaleX;
+            aObject.scale.y = this.mScaleY;
+            aObject.scale.z = this.mScaleZ;
+            return aObject;
+        }
+
+        //___________________________________________________________ Get/Set Next
+        public getNext(): Furniture {
+            return this.mNext;
+        }
+
+        public setNext(iNext: Furniture) {
+            this.mNext = iNext;
+        }
+
+        //__________________________________________________________ Addfunctions
+        public AddFurniture(iFurniture: Furniture) {
+            iFurniture.setNext(this)
+        }
+        //______________________________________________________________
+
+        public getModel(): THREE.Object3D {
+            return this.mModel3D;
+        }
+        public setModel(iModel: THREE.Object3D) {
+            this.mModel3D = iModel;
+        }
         //___________________________________________________________ Get functions
 
         public getName(): string {
             return this.mName;
+        }
+
+        public getIndex(): number {
+            return this.mIndex;
         }
 
         public getPositionX(): number {
@@ -61,8 +105,13 @@ namespace room {
 
                 //___________________________________________________________ Set functions
 
+
         public setName(iName: string) {
             this.mName = iName;
+        }
+
+        public setIndex(iIndex: number) {
+            this.mIndex = iIndex;
         }
 
         public setPositionX(iPositionX : number) {

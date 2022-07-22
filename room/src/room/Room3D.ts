@@ -3,7 +3,7 @@ namespace room {
     export class Room3D {
 
         protected static readonly Y_FLOOR = 0;
-        protected static readonly HEIGHT = 10;
+        protected static readonly HEIGHT = 3;
         protected static readonly WALL_WIDTH = 0.2;
         protected mCamera: THREE.PerspectiveCamera;
         protected mScene: THREE.Scene;
@@ -13,7 +13,9 @@ namespace room {
         // @ts-ignore
         protected mOrbitControls: THREE.OrbitControls;
 
+        protected mFurnitureMesh: Array<THREE.Mesh>;
         protected mWalls: Array<THREE.Mesh>;
+        protected mDiv3D: HTMLElement;
 
         constructor() {
             //יצירת סצנה
@@ -24,17 +26,18 @@ namespace room {
             
             //אנימציה
             this.animate();
-
+            this.mFurnitureMesh = new Array<THREE.Mesh>();
             this.mWalls = new Array<THREE.Mesh>();
         }
         //__________________________________________________________________
 
         private createScene() {
-            const aDiv3D = document.getElementById('3D_room');
+            this.mDiv3D = document.getElementById('3D_room');
+            this.mDiv3D.onclick = (iEvent: MouseEvent) => this.onClick(iEvent);
             this.mRenderer = new THREE.WebGLRenderer({ antialias: true });
-            const aRect = aDiv3D.getBoundingClientRect();
+            const aRect = this.mDiv3D.getBoundingClientRect();
             this.mRenderer.setSize(aRect.width, aRect.height);
-            aDiv3D.appendChild(this.mRenderer.domElement);
+            this.mDiv3D.appendChild(this.mRenderer.domElement);
 
             this.mScene = new THREE.Scene();
             this.mScene.background = new THREE.Color(0xbfe3dd);
@@ -49,23 +52,67 @@ namespace room {
             this.mScene.add(aDirectionalLight);
         }
         //___________________________________________________________________________
-        
-        public addModel(iURL: string, iData: any) {
+
+        public addModel(iURL: string, iData: Furniture) {
             const aLoader = new THREE.GLTFLoader();
             aLoader.load(iURL, (iModel) => this.loadModelHelper(iModel, iData));
         }
         //___________________________________________________________________________
 
-        private loadModelHelper(iModel, iData: any ) {
+        private forAllFurnitureMesh(iFurnitureMesh: THREE.Object3D) {
+            if (iFurnitureMesh instanceof THREE.Mesh) {
+                this.mFurnitureMesh.push(iFurnitureMesh);
+            }
+        }
+        //___________________________________________________________________________
+
+        private loadModelHelper(iModel, iFurnitureData: Furniture ) {
             let aModel: THREE.Object3D = iModel.scene;
+            aModel.traverse((iMesh: THREE.Object3D) => this.forAllFurnitureMesh(iMesh))
+            iFurnitureData.setModel(aModel);
+             // @ts-ignore
+            aModel.furnitureData = iFurnitureData;
             this.mScene.add(aModel);
-            aModel.position.x = iData.position.x;
-            aModel.position.y = iData.position.y;
-            aModel.position.z = iData.position.z;
-            aModel.scale.x = iData.scale.x;
-            aModel.scale.y = iData.scale.y;
-            aModel.scale.z = iData.scale.z;
-            aModel.rotateY((iData.rotationY/180) * Math.PI);
+            aModel.position.x = iFurnitureData.getPositionX();
+            aModel.position.y = iFurnitureData.getPositionX();
+            aModel.position.z = iFurnitureData.getPositionX();
+            aModel.scale.x = iFurnitureData.getScaleX();
+            aModel.scale.y = iFurnitureData.getScaleY();
+            aModel.scale.z = iFurnitureData.getScaleZ();
+            aModel.rotateY((iFurnitureData.getRotationY()/180) * Math.PI);
+        }
+        //___________________________________________________________________________
+
+        private onClick(iEvent: MouseEvent) {
+            const raycaster = new THREE.Raycaster();
+            const pointer = new THREE.Vector2();
+            let aRect = this.mDiv3D.getBoundingClientRect();
+            let aX = iEvent.clientX - aRect.left;
+            let aY = iEvent.clientY - aRect.top;
+            pointer.x = (aX / aRect.width) * 2 - 1;
+            pointer.y = - (aY / aRect.height) * 2 + 1;
+            raycaster.setFromCamera(pointer, this.mCamera);
+            const intersects = raycaster.intersectObjects(this.mFurnitureMesh);
+            if (intersects.length > 0) {
+                this.clickOnFurniture(intersects[0].object);
+                // @ts-ignore
+                intersects[0].object.material.color.set(0xff0000);
+            }
+        }
+        //___________________________________________________________________________
+
+        private clickOnFurniture(i3DObj: THREE.Object3D) {
+            
+            if (i3DObj == null) {
+                return;
+            }
+            // @ts-ignore
+            if (i3DObj.furnitureData == null) {
+                this.clickOnFurniture(i3DObj.parent)
+            } else {
+                // @ts-ignore
+                console.log(i3DObj.furnitureData);
+            }
         }
         //___________________________________________________________________________
 
