@@ -9,17 +9,18 @@ namespace room {
         private mUserCode: string;
         private mRoomData: any;
         private mFurnitureMenu: FurnitureMenu;
-        private mFurniture: Furniture;
+        private mFurnitureNodeManager: FurnitureNodeManager;
 
         constructor(iUserCode: string) {
             this.mUserCode = iUserCode;
             this.m3Dpage = document.getElementById("3D_page");
             this.m3Dpage.style.display = "block";
             this.createSidePanel();
-            this.mRoom3D = new Room3D();
+            this.mRoom3D = new Room3D(this);
             this.LoadRoomData();
-            this.mFurnitureMenu = new FurnitureMenu();
-
+            this.mFurnitureNodeManager = new FurnitureNodeManager(); 
+            this.mFurnitureMenu = new FurnitureMenu(this, this.mFurnitureNodeManager);
+            this.mFurnitureNodeManager = new FurnitureNodeManager(); 
         }
         //______________________________________
 
@@ -48,15 +49,17 @@ namespace room {
             }
             this.buildRoomFurniture(this.mRoomData.furniture);
         }
+        //________________________________________________________________
 
         private buildRoomFurniture(iData: Array<any>) {
             let URL: string;
             for (var i = 0; i < iData.length; i++) {
                 URL = this.mSidePanel.getModelURL(iData[i].itemName)
-                let aFurniture = this.addFurnitureToList(iData[i]);
+                let aFurniture = this.mFurnitureNodeManager.add(iData[i]);
                 this.mRoom3D.addModel(URL, aFurniture)
             }
         }
+        //________________________________________________________________
 
         public sendFurnitureToBuild(iname: string, iCatalog: any) {
             let aObject: any = {};
@@ -70,27 +73,24 @@ namespace room {
             aObject.scale.x = iCatalog[iname].scale;
             aObject.scale.y = iCatalog[iname].scale;
             aObject.scale.z = iCatalog[iname].scale;
-            this.addFurnitureToList(aObject)
-            let aNum: number = this.mRoomData.furniture.length;
+            let aNewFurniture = this.mFurnitureNodeManager.add(aObject);
+            this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture)
+            let aNum: number = aNewFurniture.getIndex();
             FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aNum.toString(), aObject);
+        }
+        //_____________________________________________________________________
 
-
-
-
+        
+        /////   need fixing
+        public openEditPanelDivEditorFanction(iFurniture: Furniture) {
+            this.mFurnitureMenu.openEditPanelDiv(iFurniture);
         }
 
-        private addFurnitureToList(iData): Furniture {
-            if (this.mFurniture == null) {
-                this.mFurniture = new Furniture(iData);
-                return this.mFurniture;
-            } else {
-                let aFurniture: Furniture = this.mFurniture;
-                while (aFurniture.getNext() != null) {
-                    aFurniture = aFurniture.getNext();
-                }
-                aFurniture.setNext(new Furniture(iData));
-                return aFurniture;
-            }
+        public deleteFernicher(iFurniture: Furniture) {
+            let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
+            this.mRoom3D.deletModel(aToDelet.getModel())
+            //מחיקה מדאטא
+            //מחיקה ממסך
         }
     }
 }

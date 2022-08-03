@@ -15,12 +15,17 @@ namespace room {
         private mScaleYInput: HTMLInputElement
         private mScaleZInput: HTMLInputElement
         private mNameFurnitureDiv: HTMLElement;
-        private mButton: HTMLElement;
+        private mEditButton: HTMLElement;
+        private mCancelButton: HTMLElement;
+        private mDeleteButton: HTMLElement;
+        private mEditorManager: EditorManager;
+        
 
 
 
 
-        constructor() {
+        constructor(iEditorManager: EditorManager, iFurnitureNodeManager: FurnitureNodeManager) {
+            this.mEditorManager = iEditorManager;
             this.mPositionXInput = document.getElementById("PositionX") as HTMLInputElement
             this.mPositionYInput = document.getElementById("PositionY") as HTMLInputElement
             this.mPositionZInput = document.getElementById("PositionZ") as HTMLInputElement
@@ -30,10 +35,15 @@ namespace room {
             this.mScaleZInput = document.getElementById("ScaleZ") as HTMLInputElement
             this.mEditPanelDiv = document.getElementById("Furniture_menu");
             this.mNameFurnitureDiv = document.getElementById("NameOfEditedFurniture");
-            this.mButton = document.getElementById("EditButton");
-            this.mButton.onclick = () => this.onclic();
+            this.mEditButton = document.getElementById("EditButton");
+            this.mEditButton.onclick = () => this.onclic();
+            this.mCancelButton = document.getElementById("CancelButton");
+            this.mCancelButton = document.getElementById("CancelButton");
+            this.mDeleteButton = document.getElementById("DeleteButton")
+            this.mCancelButton.onclick = () => this.onClose();
+            this.mDeleteButton.onclick = () => this.deleteFernicher();
         }
-
+        //__________________________________________________________
 
         public openEditPanelDiv(iFurniture: Furniture) {
             this.mFurniture = iFurniture;
@@ -43,22 +53,31 @@ namespace room {
             this.mPositionYInput.value = "" + this.mFurniture.getPositionY();
             this.mPositionZInput.value = "" + this.mFurniture.getPositionZ();
             this.mRotationYInput.value = "" + this.mFurniture.getRotationY();
-            this.mScaleXInput.value = "" + this.mFurniture.getPositionX();
-            this.mScaleYInput.value = "" + this.mFurniture.getPositionY();
-            this.mScaleZInput.value = "" + this.mFurniture.getPositionZ();
-
-
+            this.mScaleXInput.value = "" + this.mFurniture.getScaleX() * 100;
+            this.mScaleYInput.value = "" + this.mFurniture.getScaleY() * 100;
+            this.mScaleZInput.value = "" + this.mFurniture.getScaleZ() * 100;
         }
-        private onclic() {
-            this.mFurniture.setPositionX(parseInt(this.mPositionXInput.value));
-            this.mFurniture.setPositionY(parseInt(this.mPositionYInput.value));
-            this.mFurniture.setPositionZ(parseInt(this.mPositionZInput.value));
-            this.mFurniture.setRotationY(parseInt(this.mRotationYInput.value));
-            this.mFurniture.setScaleX(parseInt(this.mScaleXInput.value));
-            this.mFurniture.setScaleY(parseInt(this.mScaleYInput.value));
-            this.mFurniture.setScaleZ(parseInt(this.mScaleZInput.value));
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndex().toString(), this.mFurniture.getObject());
+       //__________________________________________________________
 
+        private onclic() {
+            this.mFurniture.setPositionX(parseFloat(this.mPositionXInput.value));
+            this.mFurniture.setPositionY(parseFloat(this.mPositionYInput.value));
+            this.mFurniture.setPositionZ(parseFloat(this.mPositionZInput.value));
+            this.mFurniture.setRotationY(parseFloat(this.mRotationYInput.value));
+            this.mFurniture.setScaleX(parseFloat(this.mScaleXInput.value) / 100);
+            this.mFurniture.setScaleY(parseFloat(this.mScaleYInput.value) / 100);
+            this.mFurniture.setScaleZ(parseFloat(this.mScaleZInput.value) / 100);
+            this.mEditPanelDiv.style.display = "none";
+            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndex().toString(), this.mFurniture.getObject());
+            this.mFurniture.UpdateModel();
+        }
+         //__________________________________________________________
+
+        private onClose() {
+            this.mEditPanelDiv.style.display = "none";
+        }
+        private deleteFernicher() {
+            this.mEditorManager.deleteFernicher(this.mFurniture);
         }
     }
 }

@@ -17,7 +17,8 @@ namespace room {
 
 
 
-        constructor(iDataFurniture: any,) {
+        constructor(iDataFurniture: any, iIndex: number) {
+            this.mIndex = iIndex;
             this.mName = iDataFurniture.itemName;
             this.mPositionX = iDataFurniture.position.x;
             this.mPositionY = iDataFurniture.position.y;
@@ -43,6 +44,22 @@ namespace room {
             aObject.scale.z = this.mScaleZ;
             return aObject;
         }
+
+        //____________________________________________________________Update Model
+        public UpdateModel() {
+            this.mModel3D.position.x = this.mPositionX;
+            this.mModel3D.position.y = this.mPositionY;
+            this.mModel3D.position.z = this.mPositionZ;
+            this.mModel3D.rotation.y = this.mRotationY / 180 * Math.PI;
+            this.mModel3D.scale.x = this.mScaleX;
+            this.mModel3D.scale.y = this.mScaleY;
+            this.mModel3D.scale.z = this.mScaleZ;
+
+
+
+
+        }
+
 
         //___________________________________________________________ Get/Set Next
         public getNext(): Furniture {

@@ -68,7 +68,7 @@ module room {
         public getUserData(iUserCode: string, iCallback: Function) {
             let aUserData = this.mDB.ref("users/" + iUserCode);
 
-            aUserData.on("value",
+            aUserData.once("value",
                 (iData) => {iCallback(iData.val()); }
             );
         }

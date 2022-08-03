@@ -16,8 +16,10 @@ namespace room {
         protected mFurnitureMesh: Array<THREE.Mesh>;
         protected mWalls: Array<THREE.Mesh>;
         protected mDiv3D: HTMLElement;
+        protected mEditorManager: EditorManager;
 
-        constructor() {
+        constructor(iEditorManager: EditorManager) {
+            this.mEditorManager = iEditorManager;
             //יצירת סצנה
             this.createScene();
 
@@ -57,6 +59,12 @@ namespace room {
             const aLoader = new THREE.GLTFLoader();
             aLoader.load(iURL, (iModel) => this.loadModelHelper(iModel, iData));
         }
+
+        //___________________________________________________________________
+        public deletModel(iModel: THREE.Object3D) {
+            this.mScene.remove(iModel);
+        }
+
         //___________________________________________________________________________
 
         private forAllFurnitureMesh(iFurnitureMesh: THREE.Object3D) {
@@ -95,8 +103,6 @@ namespace room {
             const intersects = raycaster.intersectObjects(this.mFurnitureMesh);
             if (intersects.length > 0) {
                 this.clickOnFurniture(intersects[0].object);
-                // @ts-ignore
-                intersects[0].object.material.color.set(0xff0000);
             }
         }
         //___________________________________________________________________________
@@ -111,7 +117,7 @@ namespace room {
                 this.clickOnFurniture(i3DObj.parent)
             } else {
                 // @ts-ignore
-                console.log(i3DObj.furnitureData);
+                this.mEditorManager.openEditPanelDivEditorFanction(i3DObj.furnitureData);
             }
         }
         //___________________________________________________________________________
