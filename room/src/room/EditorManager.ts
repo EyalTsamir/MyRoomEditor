@@ -18,9 +18,9 @@ namespace room {
             this.createSidePanel();
             this.mRoom3D = new Room3D(this);
             this.LoadRoomData();
-            this.mFurnitureNodeManager = new FurnitureNodeManager(); 
+            this.mFurnitureNodeManager = new FurnitureNodeManager();
             this.mFurnitureMenu = new FurnitureMenu(this, this.mFurnitureNodeManager);
-            this.mFurnitureNodeManager = new FurnitureNodeManager(); 
+            this.mFurnitureNodeManager = new FurnitureNodeManager();
         }
         //______________________________________
 
@@ -54,9 +54,12 @@ namespace room {
         private buildRoomFurniture(iData: Array<any>) {
             let URL: string;
             for (var i = 0; i < iData.length; i++) {
-                URL = this.mSidePanel.getModelURL(iData[i].itemName)
-                let aFurniture = this.mFurnitureNodeManager.add(iData[i]);
-                this.mRoom3D.addModel(URL, aFurniture)
+                let aFurniture = this.mFurnitureNodeManager.add(iData[i], i);
+                if (iData[i].itemName != "Deleted") {
+                    URL = this.mSidePanel.getModelURL(iData[i].itemName)
+                    this.mRoom3D.addModel(URL, aFurniture)
+                }
+
             }
         }
         //________________________________________________________________
@@ -73,24 +76,27 @@ namespace room {
             aObject.scale.x = iCatalog[iname].scale;
             aObject.scale.y = iCatalog[iname].scale;
             aObject.scale.z = iCatalog[iname].scale;
-            let aNewFurniture = this.mFurnitureNodeManager.add(aObject);
+            let aFurnitureIndex = this.mFurnitureNodeManager.getNumOfFurniture();
+            let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureIndex);
             this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture)
-            let aNum: number = aNewFurniture.getIndex();
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aNum.toString(), aObject);
+            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aFurnitureIndex.toString(), aObject);
         }
         //_____________________________________________________________________
 
-        
+
         /////   need fixing
         public openEditPanelDivEditorFanction(iFurniture: Furniture) {
             this.mFurnitureMenu.openEditPanelDiv(iFurniture);
         }
 
         public deleteFernicher(iFurniture: Furniture) {
-            let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
-            this.mRoom3D.deletModel(aToDelet.getModel())
-            //מחיקה מדאטא
-            //מחיקה ממסך
+            let aIndex = iFurniture.getIndexData();
+            iFurniture.setName("Deleted")
+            let aObj = iFurniture.getObject();
+            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aIndex.toString(), aObj);
+            //* let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
+            this.mRoom3D.deletModel(iFurniture.getModel())
+
         }
     }
 }

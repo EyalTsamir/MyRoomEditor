@@ -24,12 +24,13 @@ namespace room {
             this.createScene();
 
             // יצירת קונטרולר
-            this.createController(); 
-            
+            this.createController();
+
             //אנימציה
             this.animate();
             this.mFurnitureMesh = new Array<THREE.Mesh>();
             this.mWalls = new Array<THREE.Mesh>();
+            window.addEventListener('resize', () => this.onWindowResize());
         }
         //__________________________________________________________________
 
@@ -63,8 +64,19 @@ namespace room {
         //___________________________________________________________________
         public deletModel(iModel: THREE.Object3D) {
             this.mScene.remove(iModel);
+            iModel.traverse((iFurnitureMesh: THREE.Object3D) => this.removeAllFurnitureMesh(iFurnitureMesh))
         }
+        //___________________________________________________________________________
 
+        private removeAllFurnitureMesh(iFurnitureMesh: THREE.Object3D) {
+            if (iFurnitureMesh instanceof THREE.Mesh) {
+                let aIndex = this.mFurnitureMesh.indexOf(iFurnitureMesh);
+                if (aIndex == -1) {
+                    return;
+                }
+                this.mFurnitureMesh.splice(aIndex, 1);
+            }
+        }
         //___________________________________________________________________________
 
         private forAllFurnitureMesh(iFurnitureMesh: THREE.Object3D) {
@@ -74,11 +86,11 @@ namespace room {
         }
         //___________________________________________________________________________
 
-        private loadModelHelper(iModel, iFurnitureData: Furniture ) {
+        private loadModelHelper(iModel, iFurnitureData: Furniture) {
             let aModel: THREE.Object3D = iModel.scene;
-            aModel.traverse((iMesh: THREE.Object3D) => this.forAllFurnitureMesh(iMesh))
+            aModel.traverse((iFurnitureMesh: THREE.Object3D) => this.forAllFurnitureMesh(iFurnitureMesh))
             iFurnitureData.setModel(aModel);
-             // @ts-ignore
+            // @ts-ignore
             aModel.furnitureData = iFurnitureData;
             this.mScene.add(aModel);
             aModel.position.x = iFurnitureData.getPositionX();
@@ -87,7 +99,7 @@ namespace room {
             aModel.scale.x = iFurnitureData.getScaleX();
             aModel.scale.y = iFurnitureData.getScaleY();
             aModel.scale.z = iFurnitureData.getScaleZ();
-            aModel.rotateY((iFurnitureData.getRotationY()/180) * Math.PI);
+            aModel.rotateY((iFurnitureData.getRotationY() / 180) * Math.PI);
         }
         //___________________________________________________________________________
 
@@ -108,7 +120,7 @@ namespace room {
         //___________________________________________________________________________
 
         private clickOnFurniture(i3DObj: THREE.Object3D) {
-            
+
             if (i3DObj == null) {
                 return;
             }
@@ -125,7 +137,7 @@ namespace room {
         private createController() {
             // @ts-ignore
             this.mOrbitControls = new THREE.OrbitControls(this.mCamera, this.mRenderer.domElement);
-            this.mOrbitControls.target.set(0, (Room3D.Y_FLOOR + Room3D.HEIGHT)/2, 0);
+            this.mOrbitControls.target.set(0, (Room3D.Y_FLOOR + Room3D.HEIGHT) / 2, 0);
             this.mOrbitControls.enablePan = false;
             this.mOrbitControls.enableDamping = true;
         }
@@ -201,6 +213,14 @@ namespace room {
             requestAnimationFrame(() => this.animate());
             this.mOrbitControls.update();
             this.mRenderer.render(this.mScene, this.mCamera);
+        }
+        //___________________________________________________________________________________
+
+        private onWindowResize() {
+            const aRect = this.mDiv3D.getBoundingClientRect();
+            this.mRenderer.setSize(aRect.width, aRect.height);
+            this.mCamera.aspect = aRect.width / aRect.height;
+            this.mCamera.updateProjectionMatrix();
         }
     }
 }

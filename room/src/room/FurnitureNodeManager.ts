@@ -3,26 +3,23 @@
 namespace room {
 
     export class FurnitureNodeManager {
-        private mNumOfFernicher: number;
         private mfirst: Furniture;
         private mLast: Furniture;
 
 
 
         constructor() {
-            this.mNumOfFernicher = 0;
             this.mfirst = null;
             this.mLast = null;
         }
 
         //___________________________________________________________
 
-        public add(iFurnitureData: any): Furniture {
-            let aFurniture: Furniture = new Furniture(iFurnitureData, this.mNumOfFernicher);
+        public add(iFurnitureData: any, iFurnitureIndex : number): Furniture {
+            let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureIndex);
             if (this.mfirst == null) {
                 this.mfirst = aFurniture;
                 this.mLast = aFurniture
-                this.mNumOfFernicher = 1;
             } else {
                 let aHelper: Furniture = this.mfirst;
 
@@ -31,7 +28,6 @@ namespace room {
                 }
                 aHelper.setNext(aFurniture);
                 this.mLast = aFurniture;
-                this.mNumOfFernicher++;
             }
             return aFurniture;
         }
@@ -72,10 +68,6 @@ namespace room {
 
 
 
-        public getNumOfFernicher(): number {
-            return this.mNumOfFernicher;
-        }
-
         public getFrist(): Furniture {
             return this.mfirst;
         }
@@ -86,5 +78,15 @@ namespace room {
 
         //___________________________________________________________ Get
 
+        public getNumOfFurniture(): number {
+            let aNum: number = 0;
+            let aHelper: Furniture = this.mfirst;
+            while (aHelper != null) {
+                aNum++;
+                aHelper = aHelper.getNext();
+            }
+            return aNum;
+
+        }
     }
 }

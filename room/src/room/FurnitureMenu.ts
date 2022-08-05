@@ -68,7 +68,7 @@ namespace room {
             this.mFurniture.setScaleY(parseFloat(this.mScaleYInput.value) / 100);
             this.mFurniture.setScaleZ(parseFloat(this.mScaleZInput.value) / 100);
             this.mEditPanelDiv.style.display = "none";
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndex().toString(), this.mFurniture.getObject());
+            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndexData().toString(), this.mFurniture.getObject());
             this.mFurniture.UpdateModel();
         }
          //__________________________________________________________
@@ -77,6 +77,7 @@ namespace room {
             this.mEditPanelDiv.style.display = "none";
         }
         private deleteFernicher() {
+            this.mEditPanelDiv.style.display = "none";
             this.mEditorManager.deleteFernicher(this.mFurniture);
         }
     }

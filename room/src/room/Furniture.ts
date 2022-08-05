@@ -3,7 +3,7 @@
 namespace room {
 
     export class Furniture {
-        private mIndex: number;
+        private mIndexData: number;
         private mName: string;
         private mPositionX: number;
         private mPositionY: number;
@@ -17,8 +17,8 @@ namespace room {
 
 
 
-        constructor(iDataFurniture: any, iIndex: number) {
-            this.mIndex = iIndex;
+        constructor(iDataFurniture: any, iIndexData : number) {
+            this.mIndexData = iIndexData;
             this.mName = iDataFurniture.itemName;
             this.mPositionX = iDataFurniture.position.x;
             this.mPositionY = iDataFurniture.position.y;
@@ -88,10 +88,6 @@ namespace room {
             return this.mName;
         }
 
-        public getIndex(): number {
-            return this.mIndex;
-        }
-
         public getPositionX(): number {
             return this.mPositionX;
         }
@@ -120,15 +116,15 @@ namespace room {
             return this.mScaleZ;
         }
 
+        public getIndexData(): number {
+            return this.mIndexData;
+        }
+
                 //___________________________________________________________ Set functions
 
 
         public setName(iName: string) {
             this.mName = iName;
-        }
-
-        public setIndex(iIndex: number) {
-            this.mIndex = iIndex;
         }
 
         public setPositionX(iPositionX : number) {
