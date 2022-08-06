@@ -96,7 +96,23 @@ namespace room {
             FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aIndex.toString(), aObj);
             //* let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
             this.mRoom3D.deletModel(iFurniture.getModel())
-
         }
+        public get isDragDropActive(): boolean {
+            return this.mRoom3D.isDragDropActive;
+        }
+        public set isDragDropActive(iVal: boolean) {
+            this.mRoom3D.isDragDropActive = iVal;
+        }   
+        //______________________________________________
+
+        public updatePositionValues(iZ: number, iX: number) {
+            this.mFurnitureMenu.updatePositionValues(iZ, iX)
+        }
+        //________________________________
+        public changeMeshColor(iFurniture3DObg: THREE.Object3D, icolor: number) {
+            iFurniture3DObg.traverse((iFurnitureMesh: THREE.Object3D) => this.mRoom3D.changeMeshColor(iFurnitureMesh, icolor))
+        }
+        
+        
     }
 }

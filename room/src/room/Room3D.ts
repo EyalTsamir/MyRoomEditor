@@ -17,8 +17,14 @@ namespace room {
         protected mWalls: Array<THREE.Mesh>;
         protected mDiv3D: HTMLElement;
         protected mEditorManager: EditorManager;
+        protected mFloor: THREE.Mesh;
+        private mIsDragDropActive: boolean;
+        private mCurrentlyEditing: THREE.Object3D;
+        private mIsInDrag: boolean;
+
 
         constructor(iEditorManager: EditorManager) {
+            this.mIsInDrag = false;
             this.mEditorManager = iEditorManager;
             //יצירת סצנה
             this.createScene();
@@ -37,6 +43,11 @@ namespace room {
         private createScene() {
             this.mDiv3D = document.getElementById('3D_room');
             this.mDiv3D.onclick = (iEvent: MouseEvent) => this.onClick(iEvent);
+            this.mDiv3D.onmousedown = (iEvent: MouseEvent) => this.onMouseDown(iEvent);
+            this.mDiv3D.onmousemove = (iEvent: MouseEvent) => this.onMouseMove(iEvent);
+            this.mDiv3D.onmouseup = (iEvent: MouseEvent) => this.onMouseUp(iEvent);
+
+            
             this.mRenderer = new THREE.WebGLRenderer({ antialias: true });
             const aRect = this.mDiv3D.getBoundingClientRect();
             this.mRenderer.setSize(aRect.width, aRect.height);
@@ -94,8 +105,8 @@ namespace room {
             aModel.furnitureData = iFurnitureData;
             this.mScene.add(aModel);
             aModel.position.x = iFurnitureData.getPositionX();
-            aModel.position.y = iFurnitureData.getPositionX();
-            aModel.position.z = iFurnitureData.getPositionX();
+            aModel.position.y = iFurnitureData.getPositionY();
+            aModel.position.z = iFurnitureData.getPositionZ();
             aModel.scale.x = iFurnitureData.getScaleX();
             aModel.scale.y = iFurnitureData.getScaleY();
             aModel.scale.z = iFurnitureData.getScaleZ();
@@ -103,7 +114,7 @@ namespace room {
         }
         //___________________________________________________________________________
 
-        private onClick(iEvent: MouseEvent) {
+        private getFurnitureUnderMouse(iEvent: MouseEvent) {
             const raycaster = new THREE.Raycaster();
             const pointer = new THREE.Vector2();
             let aRect = this.mDiv3D.getBoundingClientRect();
@@ -114,22 +125,104 @@ namespace room {
             raycaster.setFromCamera(pointer, this.mCamera);
             const intersects = raycaster.intersectObjects(this.mFurnitureMesh);
             if (intersects.length > 0) {
-                this.clickOnFurniture(intersects[0].object);
+                let aFurniture = this.getMeshFurniture(intersects[0].object);
+                return aFurniture;
             }
         }
         //___________________________________________________________________________
 
-        private clickOnFurniture(i3DObj: THREE.Object3D) {
+        private onClick(iEvent: MouseEvent) {
+
+            let aFurniture = this.getFurnitureUnderMouse(iEvent);
+            this.clickOnFurniture(aFurniture);
+        }
+        //___________________________________________________________________________
+
+        private getMeshFurniture(i3DObj: THREE.Object3D) {
 
             if (i3DObj == null) {
                 return;
             }
             // @ts-ignore
             if (i3DObj.furnitureData == null) {
-                this.clickOnFurniture(i3DObj.parent)
+                return this.getMeshFurniture(i3DObj.parent)
             } else {
+                return i3DObj;
+            }
+        }
+
+        //___________________________________________________
+        private clickOnFurniture(i3DObj: THREE.Object3D) {
+
+            if (i3DObj == null) {
+                return;
+            }
+            // @ts-ignore
+            if (!this.mIsDragDropActive) {
                 // @ts-ignore
                 this.mEditorManager.openEditPanelDivEditorFanction(i3DObj.furnitureData);
+                if (this.mCurrentlyEditing != null && this.mCurrentlyEditing != i3DObj) {
+                    this.mCurrentlyEditing.traverse((iFurnitureMesh: THREE.Object3D) => this.changeMeshColor(iFurnitureMesh, 0xffffff))
+                }
+                this.mCurrentlyEditing = i3DObj;
+                i3DObj.traverse((iFurnitureMesh: THREE.Object3D) => this.changeMeshColor(iFurnitureMesh, 0xff0000))
+            }
+        }
+
+        
+
+        //___________________________________________________________________________
+
+        private onMouseDown(iEvent: MouseEvent) {
+            if (this.mIsDragDropActive) {
+                let aFurniture = this.getFurnitureUnderMouse(iEvent);
+                if (this.mCurrentlyEditing == aFurniture) {
+                    aFurniture.traverse((iFurnitureMesh: THREE.Object3D) => this.changeMeshColor(iFurnitureMesh, 0x04ff00))
+                    this.mIsInDrag = true;
+                    
+                }
+            }
+        }
+
+        private onMouseMove(iEvent: MouseEvent) {
+            if (this.mCurrentlyEditing == null) {
+                return;
+            }
+            if (this.mIsDragDropActive && this.mIsInDrag) {
+                const raycaster = new THREE.Raycaster();
+                const pointer = new THREE.Vector2();
+                let aRect = this.mDiv3D.getBoundingClientRect();
+                let aX = iEvent.clientX - aRect.left;
+                let aY = iEvent.clientY - aRect.top;
+                pointer.x = (aX / aRect.width) * 2 - 1;
+                pointer.y = - (aY / aRect.height) * 2 + 1;
+                raycaster.setFromCamera(pointer, this.mCamera);
+                const intersects = raycaster.intersectObject(this.mFloor, false);
+                if (intersects.length == 0) {
+                    return;
+                }
+                let aPosX = Math.round(intersects[0].point.x * 1000) / 1000;
+                let aPosZ = Math.round(intersects[0].point.z * 1000) / 1000;
+                this.mCurrentlyEditing.position.x = aPosX;
+                this.mCurrentlyEditing.position.z = aPosZ;
+                this.mEditorManager.updatePositionValues(aPosZ, aPosX)
+            }
+        }
+
+        //___________________________________________________________________________
+
+        private onMouseUp(iEvent: MouseEvent) {
+            if (this.mIsInDrag) {
+                this.mIsInDrag = false;
+                this.mCurrentlyEditing.traverse((iFurnitureMesh: THREE.Object3D) => this.changeMeshColor(iFurnitureMesh, 0xff0000))
+            }
+        }
+        
+        //___________________________________________________________________________
+
+        public changeMeshColor(iFurnitureMesh: THREE.Object3D, iColor: number) {
+            if (iFurnitureMesh instanceof THREE.Mesh) {
+                (iFurnitureMesh.material as THREE.MeshBasicMaterial).color = new THREE.Color(iColor);
             }
         }
         //___________________________________________________________________________
@@ -157,8 +250,8 @@ namespace room {
 
             aGeometry = new THREE.BoxGeometry(iWidth, Room3D.WALL_WIDTH, iLength);
             aMaterial = new THREE.MeshPhongMaterial();
-            const afloor = new THREE.Mesh(aGeometry, aMaterial);
-            afloor.position.y = Room3D.Y_FLOOR;
+            this.mFloor = new THREE.Mesh(aGeometry, aMaterial);
+            this.mFloor.position.y = Room3D.Y_FLOOR;
 
             aGeometry = new THREE.BoxGeometry(iWidth, Room3D.WALL_WIDTH, iLength);
             aMaterial = new THREE.MeshPhongMaterial();
@@ -190,13 +283,13 @@ namespace room {
             aWall4.position.y = Room3D.HEIGHT / 2;
 
             this.mWalls.push(aTop)
-            this.mWalls.push(afloor);
+            this.mWalls.push(this.mFloor);
             this.mWalls.push(aWall);
             this.mWalls.push(aWall2);
             this.mWalls.push(aWall3);
             this.mWalls.push(aWall4);
 
-            this.mScene.add(afloor);
+            this.mScene.add(this.mFloor);
             //this.mScene.add(aTop);
             this.mScene.add(aCube);
             this.mScene.add(aWall);
@@ -222,5 +315,16 @@ namespace room {
             this.mCamera.aspect = aRect.width / aRect.height;
             this.mCamera.updateProjectionMatrix();
         }
+        //___________________________________________________________________________________
+
+        public get isDragDropActive(): boolean {
+            return this.mIsDragDropActive;
+        }
+
+        public set isDragDropActive(iVal: boolean) {
+            this.mOrbitControls.enabled = !iVal;
+            this.mIsDragDropActive = iVal;
+        }
     }
+
 }

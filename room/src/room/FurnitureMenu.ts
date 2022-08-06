@@ -18,14 +18,16 @@ namespace room {
         private mEditButton: HTMLElement;
         private mCancelButton: HTMLElement;
         private mDeleteButton: HTMLElement;
+        private mDragDropButton: HTMLElement;
         private mEditorManager: EditorManager;
         
-
+        
 
 
 
         constructor(iEditorManager: EditorManager, iFurnitureNodeManager: FurnitureNodeManager) {
             this.mEditorManager = iEditorManager;
+            this.mEditorManager.isDragDropActive = false;
             this.mPositionXInput = document.getElementById("PositionX") as HTMLInputElement
             this.mPositionYInput = document.getElementById("PositionY") as HTMLInputElement
             this.mPositionZInput = document.getElementById("PositionZ") as HTMLInputElement
@@ -40,6 +42,8 @@ namespace room {
             this.mCancelButton = document.getElementById("CancelButton");
             this.mCancelButton = document.getElementById("CancelButton");
             this.mDeleteButton = document.getElementById("DeleteButton")
+            this.mDragDropButton = document.getElementById("DragDrop")
+            this.mDragDropButton.onclick = () => this.onDragDrop();
             this.mCancelButton.onclick = () => this.onClose();
             this.mDeleteButton.onclick = () => this.deleteFernicher();
         }
@@ -68,14 +72,37 @@ namespace room {
             this.mFurniture.setScaleY(parseFloat(this.mScaleYInput.value) / 100);
             this.mFurniture.setScaleZ(parseFloat(this.mScaleZInput.value) / 100);
             this.mEditPanelDiv.style.display = "none";
+            this.mEditorManager.isDragDropActive = false;
+            this.mEditorManager.changeMeshColor(this.mFurniture.getModel(), 0xffffff)
             FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndexData().toString(), this.mFurniture.getObject());
             this.mFurniture.UpdateModel();
         }
          //__________________________________________________________
 
+
+        public updatePositionValues(iZ: number, iX :number) {
+            this.mPositionXInput.value = "" + iX;
+            this.mPositionZInput.value = "" + iZ;
+            
+        }
+        //_____________________________________________________________
+
         private onClose() {
             this.mEditPanelDiv.style.display = "none";
+            this.mEditorManager.isDragDropActive = false;
+            this.mEditorManager.changeMeshColor(this.mFurniture.getModel(), 0xffffff)
         }
+        private onDragDrop() {
+
+            if (!this.mEditorManager.isDragDropActive) {
+                this.mEditorManager.isDragDropActive = true;
+                this.mDragDropButton.style.backgroundColor = "green";
+            } else {
+                this.mEditorManager.isDragDropActive = false;
+                this.mDragDropButton.style.backgroundColor = "white";
+            }
+        }
+        
         private deleteFernicher() {
             this.mEditPanelDiv.style.display = "none";
             this.mEditorManager.deleteFernicher(this.mFurniture);
