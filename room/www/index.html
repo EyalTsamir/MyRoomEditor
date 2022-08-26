@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Room Editor </title>
-    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <!--<script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-auth.js"></script>-->
     <script src="js/three.js"></script>
     <script src="js/OrbitControls.js"></script>
     <script src="js/threeJS/loaders/GLTFLoader.js"></script>
@@ -57,7 +61,7 @@
             <label>Scale Y:   </label>
             <input type="number" id="ScaleZ" style="height:10px" value=""><br><br>
             
-            <button id="EditButton" style="">Edit</button>
+            <button id="UpdateButton" style="">Update</button>
             <button id="CancelButton" style="">Cancel</button>
             <button id="DeleteButton" style="">Delete</button>
             <button id="DragDrop" style=" background-color:white"><img style="width:13px" src="images/images.png" /></button>

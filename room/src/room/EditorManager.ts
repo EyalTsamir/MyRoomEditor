@@ -20,7 +20,6 @@ namespace room {
             this.LoadRoomData();
             this.mFurnitureNodeManager = new FurnitureNodeManager();
             this.mFurnitureMenu = new FurnitureMenu(this, this.mFurnitureNodeManager);
-            this.mFurnitureNodeManager = new FurnitureNodeManager();
         }
         //______________________________________
 
@@ -35,7 +34,7 @@ namespace room {
         //______________________________________
 
         private LoadRoomData() {
-            FireBaseProxy.instance().getUserData(this.mUserCode, (iData: any) => this.LoadRoomDataHelper(iData));
+            FireBaseProxy.instance().loadRoomData(this.mUserCode, (iData: any) => this.LoadRoomDataHelper(iData));
 
         }
 
@@ -54,7 +53,7 @@ namespace room {
         private buildRoomFurniture(iData: Array<any>) {
             let URL: string;
             for (var i = 0; i < iData.length; i++) {
-                let aFurniture = this.mFurnitureNodeManager.add(iData[i], i);
+                let aFurniture = this.mFurnitureNodeManager.add(iData, iData[i]);
                 if (iData[i].itemName != "Deleted") {
                     URL = this.mSidePanel.getModelURL(iData[i].itemName)
                     this.mRoom3D.addModel(URL, aFurniture)
@@ -76,10 +75,10 @@ namespace room {
             aObject.scale.x = iCatalog[iname].scale;
             aObject.scale.y = iCatalog[iname].scale;
             aObject.scale.z = iCatalog[iname].scale;
-            let aFurnitureIndex = this.mFurnitureNodeManager.getNumOfFurniture();
-            let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureIndex);
+            let aFurnitureID = this.mFurnitureNodeManager.getEmptyID();
+            let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID);
             this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture)
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aFurnitureIndex.toString(), aObject);
+            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aFurnitureID.toString(), aObject);
         }
         //_____________________________________________________________________
 
@@ -94,8 +93,8 @@ namespace room {
             iFurniture.setName("Deleted")
             let aObj = iFurniture.getObject();
             FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aIndex.toString(), aObj);
-            //* let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
             this.mRoom3D.deletModel(iFurniture.getModel())
+            let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
         }
         public get isDragDropActive(): boolean {
             return this.mRoom3D.isDragDropActive;

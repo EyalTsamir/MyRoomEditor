@@ -15,9 +15,9 @@ namespace room {
         private mScaleYInput: HTMLInputElement
         private mScaleZInput: HTMLInputElement
         private mNameFurnitureDiv: HTMLElement;
-        private mEditButton: HTMLElement;
+        private mUpdateButton: HTMLElement;
         private mCancelButton: HTMLElement;
-        private mDeleteButton: HTMLElement;
+        private mDeleteButton: HTMLElement;1
         private mDragDropButton: HTMLElement;
         private mEditorManager: EditorManager;
         
@@ -37,8 +37,8 @@ namespace room {
             this.mScaleZInput = document.getElementById("ScaleZ") as HTMLInputElement
             this.mEditPanelDiv = document.getElementById("Furniture_menu");
             this.mNameFurnitureDiv = document.getElementById("NameOfEditedFurniture");
-            this.mEditButton = document.getElementById("EditButton");
-            this.mEditButton.onclick = () => this.onclic();
+            this.mUpdateButton = document.getElementById("UpdateButton");
+            this.mUpdateButton.onclick = () => this.onclic();
             this.mCancelButton = document.getElementById("CancelButton");
             this.mCancelButton = document.getElementById("CancelButton");
             this.mDeleteButton = document.getElementById("DeleteButton")

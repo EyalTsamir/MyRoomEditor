@@ -38,7 +38,7 @@ module room {
         }
         //________________________________________________________
 
-        public getItemsCatalog(iCallback: Function) {
+        public loadFurnitureList(iCallback: Function) {
             let aItemsCatalogRef = this.mDB.ref("ItemsCatalog");
 
             aItemsCatalogRef.on("value",
@@ -47,11 +47,13 @@ module room {
         }
         //________________________________________________________
 
-        public passwordVerification(iUserName: string, iPassword: string, iIsUserExsistCallback: Function) {
+        public checkIfUserExsit(iUserName: string, iPassword: string, iIsUserExsistCallback: Function) {
             let aItemsCatalogRef = this.mDB.ref("users/" + iUserName + "/_password");
 
             aItemsCatalogRef.on("value",
-                (iData) => { this.passwordVerificationHelper(iIsUserExsistCallback, iPassword, iData.val()); }
+                (iData) => {
+                    this.passwordVerificationHelper(iIsUserExsistCallback, iPassword, iData.val());
+                }
             );
         }
         //___________________________________________
@@ -65,7 +67,7 @@ module room {
         }
         //_________________________________________________
 
-        public getUserData(iUserCode: string, iCallback: Function) {
+        public loadRoomData(iUserCode: string, iCallback: Function) {
             let aUserData = this.mDB.ref("users/" + iUserCode);
 
             aUserData.once("value",

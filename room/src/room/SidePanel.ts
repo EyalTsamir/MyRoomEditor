@@ -17,7 +17,7 @@ namespace room {
             this.mItemDiv = iItemDiv;
             this.mSideMenuDiv = iSideMenuDiv;
             this.mSideMenuDiv.removeChild(this.mItemDiv);
-            FireBaseProxy.instance().getItemsCatalog((iItemsData: any) => this.buildSidePanel(iItemsData))
+            FireBaseProxy.instance().loadFurnitureList((iItemsData: any) => this.buildSidePanel(iItemsData))
         }
         //___________________________________________________________
 

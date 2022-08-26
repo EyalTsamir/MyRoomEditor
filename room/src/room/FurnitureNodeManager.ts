@@ -15,8 +15,8 @@ namespace room {
 
         //___________________________________________________________
 
-        public add(iFurnitureData: any, iFurnitureIndex : number): Furniture {
-            let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureIndex);
+        public add(iFurnitureData: any, iFurnitureID: number): Furniture {
+            let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureID);
             if (this.mfirst == null) {
                 this.mfirst = aFurniture;
                 this.mLast = aFurniture
@@ -31,6 +31,7 @@ namespace room {
             }
             return aFurniture;
         }
+        //__________________________________________________
 
         public deleteFernicher(iFernicher: Furniture): Furniture {
             if (this.mfirst == null) {
@@ -87,6 +88,21 @@ namespace room {
             }
             return aNum;
 
+        }
+
+        //_______________________________________________________
+
+        public getEmptyID(): number {
+            let aFurniture = this.mfirst;
+            let i = 0;
+            while (aFurniture != null) {
+                if (aFurniture.getIndexData() != i) {
+                    return i;
+                }
+                aFurniture = aFurniture.getNext();
+                i++;
+            }
+            return i
         }
     }
 }
