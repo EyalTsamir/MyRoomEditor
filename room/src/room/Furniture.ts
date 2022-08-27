@@ -17,7 +17,7 @@ namespace room {
 
 
 
-        constructor(iDataFurniture: any, iID : number ) {
+        constructor(iDataFurniture: any, iID: number) {
             this.mName = iDataFurniture.itemName;
             this.mPositionX = iDataFurniture.position.x;
             this.mPositionY = iDataFurniture.position.y;
@@ -54,10 +54,31 @@ namespace room {
             this.mModel3D.scale.x = this.mScaleX;
             this.mModel3D.scale.y = this.mScaleY;
             this.mModel3D.scale.z = this.mScaleZ;
+        }
 
 
 
-
+        //____________________________________________________________
+        public CopyFrom(iFurniture: Furniture) {
+            this.mPositionX = iFurniture.getPositionX();
+            this.mPositionY = iFurniture.getPositionY();
+            this.mPositionZ = iFurniture.getPositionZ();
+            this.mRotationY = iFurniture.getRotationY();
+            this.mScaleX = iFurniture.getScaleX();
+            this.mScaleY = iFurniture.getScaleY();
+            this.mScaleZ = iFurniture.getScaleZ();
+        }
+        //____________________________________________________________
+        public isEqualParameter(iFurniture: Furniture): boolean {
+            return (
+                iFurniture.getPositionX() == this.mPositionX &&
+                iFurniture.getPositionY() == this.mPositionY &&
+                iFurniture.getPositionZ() == this.mPositionZ &&
+                iFurniture.getRotationY() == this.mRotationY &&
+                iFurniture.getScaleX() == this.mScaleX &&
+                iFurniture.getScaleY() == this.mScaleY &&
+                iFurniture.getScaleZ() == this.mScaleZ
+                )
         }
 
 
@@ -120,14 +141,14 @@ namespace room {
             return this.mID;
         }
 
-                //___________________________________________________________ Set functions
+        //___________________________________________________________ Set functions
 
 
         public setName(iName: string) {
             this.mName = iName;
         }
 
-        public setPositionX(iPositionX : number) {
+        public setPositionX(iPositionX: number) {
             this.mPositionX = iPositionX;
         }
 
@@ -143,7 +164,7 @@ namespace room {
             this.mRotationY = iRotationY;
         }
 
-        public setScaleX(iScaleX : number) {
+        public setScaleX(iScaleX: number) {
             this.mScaleX = iScaleX;
         }
 

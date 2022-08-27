@@ -71,7 +71,23 @@ namespace room {
             const aLoader = new THREE.GLTFLoader();
             aLoader.load(iURL, (iModel) => this.loadModelHelper(iModel, iData));
         }
+        //___________________________________________________________________________
 
+        private loadModelHelper(iModel, iFurnitureData: Furniture) {
+            let aModel: THREE.Object3D = iModel.scene;
+            aModel.traverse((iFurnitureMesh: THREE.Object3D) => this.forAllFurnitureMesh(iFurnitureMesh))
+            iFurnitureData.setModel(aModel);
+            // @ts-ignore
+            aModel.furnitureData = iFurnitureData;
+            this.mScene.add(aModel);
+            aModel.position.x = iFurnitureData.getPositionX();
+            aModel.position.y = iFurnitureData.getPositionY();
+            aModel.position.z = iFurnitureData.getPositionZ();
+            aModel.scale.x = iFurnitureData.getScaleX();
+            aModel.scale.y = iFurnitureData.getScaleY();
+            aModel.scale.z = iFurnitureData.getScaleZ();
+            aModel.rotateY((iFurnitureData.getRotationY() / 180) * Math.PI);
+        }
         //___________________________________________________________________
         public deletModel(iModel: THREE.Object3D) {
             this.mScene.remove(iModel);
@@ -94,23 +110,6 @@ namespace room {
             if (iFurnitureMesh instanceof THREE.Mesh) {
                 this.mFurnitureMesh.push(iFurnitureMesh);
             }
-        }
-        //___________________________________________________________________________
-
-        private loadModelHelper(iModel, iFurnitureData: Furniture) {
-            let aModel: THREE.Object3D = iModel.scene;
-            aModel.traverse((iFurnitureMesh: THREE.Object3D) => this.forAllFurnitureMesh(iFurnitureMesh))
-            iFurnitureData.setModel(aModel);
-            // @ts-ignore
-            aModel.furnitureData = iFurnitureData;
-            this.mScene.add(aModel);
-            aModel.position.x = iFurnitureData.getPositionX();
-            aModel.position.y = iFurnitureData.getPositionY();
-            aModel.position.z = iFurnitureData.getPositionZ();
-            aModel.scale.x = iFurnitureData.getScaleX();
-            aModel.scale.y = iFurnitureData.getScaleY();
-            aModel.scale.z = iFurnitureData.getScaleZ();
-            aModel.rotateY((iFurnitureData.getRotationY() / 180) * Math.PI);
         }
         //___________________________________________________________________________
 
@@ -150,8 +149,8 @@ namespace room {
                 return i3DObj;
             }
         }
-
         //___________________________________________________
+
         private clickOnFurniture(i3DObj: THREE.Object3D) {
 
             if (i3DObj == null) {
@@ -168,9 +167,6 @@ namespace room {
                 i3DObj.traverse((iFurnitureMesh: THREE.Object3D) => this.changeMeshColor(iFurnitureMesh, 0xff0000))
             }
         }
-
-        
-
         //___________________________________________________________________________
 
         private onMouseDown(iEvent: MouseEvent) {
@@ -183,6 +179,7 @@ namespace room {
                 }
             }
         }
+        //___________________________________________________________________________
 
         private onMouseMove(iEvent: MouseEvent) {
             if (this.mCurrentlyEditing == null) {

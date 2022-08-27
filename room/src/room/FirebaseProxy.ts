@@ -17,6 +17,7 @@ module room {
 
         private mConfig: any
         private mDB: any;
+        private mUpdateFireBaseTimeOut : number;
 
         private constructor() {
 
@@ -76,12 +77,20 @@ module room {
         }
         //________________________________________________________
 
-        public updateData(iTo: string, iChild: string, iData: any) {
+        public sendDataToFireBase(iTo: string, iChild: string, iData: any) {
             let aDataRef = this.mDB.ref(iTo);
             aDataRef.child(iChild).update(iData,
                 (iError) => { console.log(iError); }
             );
         }
+
+        //________________________________________________________
+        public updateData(iTo: string, iChild: string, iData: any) {
+            clearTimeout(this.mUpdateFireBaseTimeOut);
+            this.mUpdateFireBaseTimeOut = setTimeout(() => this.sendDataToFireBase(iTo, iChild, iData), 1000)
+        }
+
+
         //____________________________________________________
         private async onGetCollabAuthId(snap) { }
         //____________________________________________________

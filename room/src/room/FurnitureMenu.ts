@@ -15,7 +15,6 @@ namespace room {
         private mScaleYInput: HTMLInputElement
         private mScaleZInput: HTMLInputElement
         private mNameFurnitureDiv: HTMLElement;
-        private mUpdateButton: HTMLElement;
         private mCancelButton: HTMLElement;
         private mDeleteButton: HTMLElement;1
         private mDragDropButton: HTMLElement;
@@ -37,15 +36,14 @@ namespace room {
             this.mScaleZInput = document.getElementById("ScaleZ") as HTMLInputElement
             this.mEditPanelDiv = document.getElementById("Furniture_menu");
             this.mNameFurnitureDiv = document.getElementById("NameOfEditedFurniture");
-            this.mUpdateButton = document.getElementById("UpdateButton");
-            this.mUpdateButton.onclick = () => this.onclic();
-            this.mCancelButton = document.getElementById("CancelButton");
             this.mCancelButton = document.getElementById("CancelButton");
             this.mDeleteButton = document.getElementById("DeleteButton")
             this.mDragDropButton = document.getElementById("DragDrop")
             this.mDragDropButton.onclick = () => this.onDragDrop();
             this.mCancelButton.onclick = () => this.onClose();
             this.mDeleteButton.onclick = () => this.deleteFernicher();
+            setInterval(() => this.cuntinusUpdate(), 100)
+
         }
         //__________________________________________________________
 
@@ -60,20 +58,42 @@ namespace room {
             this.mScaleXInput.value = "" + this.mFurniture.getScaleX() * 100;
             this.mScaleYInput.value = "" + this.mFurniture.getScaleY() * 100;
             this.mScaleZInput.value = "" + this.mFurniture.getScaleZ() * 100;
+
         }
        //__________________________________________________________
 
-        private onclic() {
-            this.mFurniture.setPositionX(parseFloat(this.mPositionXInput.value));
-            this.mFurniture.setPositionY(parseFloat(this.mPositionYInput.value));
-            this.mFurniture.setPositionZ(parseFloat(this.mPositionZInput.value));
-            this.mFurniture.setRotationY(parseFloat(this.mRotationYInput.value));
-            this.mFurniture.setScaleX(parseFloat(this.mScaleXInput.value) / 100);
-            this.mFurniture.setScaleY(parseFloat(this.mScaleYInput.value) / 100);
-            this.mFurniture.setScaleZ(parseFloat(this.mScaleZInput.value) / 100);
-            this.mEditPanelDiv.style.display = "none";
-            this.mEditorManager.isDragDropActive = false;
-            this.mEditorManager.changeMeshColor(this.mFurniture.getModel(), 0xffffff)
+        private cuntinusUpdate() {
+            if (this.mFurniture == null) {
+                return
+            }
+            let aObject: any = {};
+            aObject.itemName = this.mFurniture.getName();
+            aObject.position = {};
+            if (parseFloat(this.mPositionYInput.value) < 0.1) {
+                this.mPositionYInput.value = "0.1";
+            }
+            aObject.position.x = parseFloat(this.mPositionXInput.value);
+            aObject.position.y = parseFloat(this.mPositionYInput.value);
+            aObject.position.z = parseFloat(this.mPositionZInput.value);
+            aObject.rotationY = parseFloat(this.mRotationYInput.value);
+            aObject.scale = {};
+            if (parseFloat(this.mScaleXInput.value) < 0.1) {
+                this.mScaleXInput.value = "0.1";
+            }
+            if (parseFloat(this.mScaleYInput.value) < 0.1) {
+                this.mScaleYInput.value = "0.1";
+            }
+            if (parseFloat(this.mScaleZInput.value) < 0.1) {
+                this.mScaleZInput.value = "0.1";
+            }
+            aObject.scale.x = parseFloat(this.mScaleXInput.value) / 100;
+            aObject.scale.y = parseFloat(this.mScaleYInput.value) / 100;
+            aObject.scale.z = parseFloat(this.mScaleZInput.value) / 100;
+            let aTempFurniture = new Furniture(aObject, this.mFurniture.getIndexData())
+            if (this.mFurniture.isEqualParameter(aTempFurniture)) {
+                return
+            }
+            this.mFurniture.CopyFrom(aTempFurniture);
             FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndexData().toString(), this.mFurniture.getObject());
             this.mFurniture.UpdateModel();
         }

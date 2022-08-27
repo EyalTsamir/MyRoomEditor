@@ -17,18 +17,25 @@ namespace room {
 
         public add(iFurnitureData: any, iFurnitureID: number): Furniture {
             let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureID);
-            if (this.mfirst == null) {
+            if (this.mfirst == null) { ///////////////////////////
                 this.mfirst = aFurniture;
                 this.mLast = aFurniture
             } else {
-                let aHelper: Furniture = this.mfirst;
-
-                while (aHelper.getNext() != null) {
-                    aHelper = aHelper.getNext();
+                if (this.mfirst.getIndexData() < aFurniture.getIndexData()) { ///////////////////////////
+                    let aHelper: Furniture = this.mfirst;
+                    while (aHelper.getNext() != null && aHelper.getNext().getIndexData() < aFurniture.getIndexData()) {
+                        aHelper = aHelper.getNext();
+                    }
+                    aFurniture.setNext(aHelper.getNext());
+                    aHelper.setNext(aFurniture)
+                    if (aFurniture.getNext() == null) {
+                        this.mLast = aFurniture;
+                    }
+                } else { ///////////////////////////
+                    aFurniture.setNext(this.mfirst);
+                        this.mfirst = aFurniture;
                 }
-                aHelper.setNext(aFurniture);
-                this.mLast = aFurniture;
-            }
+                 }
             return aFurniture;
         }
         //__________________________________________________

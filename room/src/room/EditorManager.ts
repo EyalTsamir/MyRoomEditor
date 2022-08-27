@@ -53,8 +53,8 @@ namespace room {
         private buildRoomFurniture(iData: Array<any>) {
             let URL: string;
             for (var i = 0; i < iData.length; i++) {
-                let aFurniture = this.mFurnitureNodeManager.add(iData, iData[i]);
                 if (iData[i].itemName != "Deleted") {
+                    let aFurniture = this.mFurnitureNodeManager.add(iData[i], i);
                     URL = this.mSidePanel.getModelURL(iData[i].itemName)
                     this.mRoom3D.addModel(URL, aFurniture)
                 }
@@ -68,7 +68,7 @@ namespace room {
             aObject.itemName = iname;
             aObject.position = {};
             aObject.position.x = 0;
-            aObject.position.y = 0;
+            aObject.position.y = 0.1;
             aObject.position.z = 0;
             aObject.rotationY = 90;
             aObject.scale = {};
@@ -78,7 +78,7 @@ namespace room {
             let aFurnitureID = this.mFurnitureNodeManager.getEmptyID();
             let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID);
             this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture)
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aFurnitureID.toString(), aObject);
+            FireBaseProxy.instance().sendDataToFireBase("/users/eyal1163/furniture", aFurnitureID.toString(), aObject);
         }
         //_____________________________________________________________________
 
@@ -92,7 +92,7 @@ namespace room {
             let aIndex = iFurniture.getIndexData();
             iFurniture.setName("Deleted")
             let aObj = iFurniture.getObject();
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", aIndex.toString(), aObj);
+            FireBaseProxy.instance().sendDataToFireBase("/users/eyal1163/furniture", aIndex.toString(), aObj);
             this.mRoom3D.deletModel(iFurniture.getModel())
             let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
         }
