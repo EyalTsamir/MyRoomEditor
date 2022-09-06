@@ -68,7 +68,16 @@
                 <img src="images/303024.jpg" id="main_img" style=" width:100px; height: 80px" />
             </div>
         </div>
-        <div id="Furniture_menu" style="display: none; top: 50px; position: absolute; border: solid; left: 160px;z-index:5000;background-color:azure; padding:10px">
+        <div id="TopMenu" style="top: 10px; width: 90%; position:absolute; border: solid; left: 160px; z-index: 5000; background-color: azure; padding: 10px">
+            <label>Room name:   </label>
+            <input type="text" id="IDRoomNameMenu" style="height:10px" value="44">
+            <label>Room length:   </label>
+            <input type="number" id="IDRoomLengtMenu" style="height:10px" value="44">
+            <label>Room width:   </label>
+            <input type="number" id="IDRoomWidthMenu" style="height:10px" value="44">\
+            <button id="UpMenueButton" style="">Cancel</button>
+        </div>
+        <div id="Furniture_menu" style="display: none; top: 60px; position: absolute; border: solid; left: 160px;z-index:5000;background-color:azure; padding:10px">
             <h3 id="NameOfEditedFurniture" style="font-size: 20px">Furniture edit menu</h3>
             <label>Position X:   </label>
             <input type="number" id="PositionX" style="height:10px" value="44"><br>
@@ -84,7 +93,7 @@
             <input type="number" id="ScaleY" style="height:10px" value=""><br>
             <label>Scale Y:   </label>
             <input type="number" id="ScaleZ" style="height:10px" value=""><br><br>
-            
+
             <button id="CancelButton" style="">Cancel</button>
             <button id="DeleteButton" style="">Delete</button>
             <button id="DragDrop" style=" background-color:white"><img style="width:13px" src="images/images.png" /></button>

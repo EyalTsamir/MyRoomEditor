@@ -49,7 +49,10 @@ namespace room {
             aLoginMenu.style.display = "none";
             let aRegisterMenu = document.getElementById("register");
             aRegisterMenu.style.display = "block";
+            const aFailRegister = document.getElementById("failRegister")
+            aFailRegister.style.display = "none";
             let aRegister = new Register(() => this.FinishRegister());
+
             
 
         }
@@ -58,8 +61,7 @@ namespace room {
         private FinishRegister() {
             this.mLoginMenuDiv.style.display = "block";
             this.mRegisterDiv.style.display = "none";
-            const aFailRegister = document.getElementById("failRegister")
-            aFailRegister.style.display = "none";
+
 
         }
 

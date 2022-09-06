@@ -34,7 +34,8 @@ namespace room {
             if (!iISRegistrationCorrect) {
                 this.mFailRegister.style.display = "block";
             } else {
-                this.mCallBack(this.mFailRegister);
+                
+                this.mCallBack();
 
                 let aObject: any = {};
                 aObject.Metadata = {};
@@ -43,7 +44,7 @@ namespace room {
                 aObject.Metadata.size.length = (document.getElementById("IdRoomLengthRegister") as HTMLInputElement).value; // להכניס מהשדה
                 aObject.Metadata.size.width = (document.getElementById("IdRoomWidthRegister") as HTMLInputElement).value; // להכניס מהשדה
                 aObject.email = (document.getElementById("IdEmailRegister") as HTMLInputElement).value;
-                aObject._passwoed = (document.getElementById("IdPasswordRegister") as HTMLInputElement).value;
+                aObject._password = (document.getElementById("IdPasswordRegister") as HTMLInputElement).value;
                 FireBaseProxy.instance().sendDataToFireBase("/users", this.mUserName, aObject);
             }
         }

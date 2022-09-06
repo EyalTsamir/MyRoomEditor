@@ -18,7 +18,7 @@ module room {
         private mConfig: any
         private mDB: any;
         private mUpdateFireBaseTimeOut: number;
-
+        private mUserName: string;
         private constructor() {
 
             this.mConfig = {
@@ -53,13 +53,14 @@ module room {
 
             aItemsCatalogRef.on("value",
                 (iData) => {
-                    this.passwordVerificationHelper(iIsUserExsistCallback, iPassword, iData.val());
+                    this.passwordVerificationHelper(iIsUserExsistCallback, iPassword, iData.val(), iUserName);
                 }
             );
         }
         //___________________________________________
-        public passwordVerificationHelper(iIsUserExsistCallback: Function, iPassword: string, iDataVal,) {
+        public passwordVerificationHelper(iIsUserExsistCallback: Function, iPassword: string, iDataVal, iUserName) {
             if (iDataVal == iPassword) {
+                this.mUserName = iUserName;
                 iIsUserExsistCallback(true)
             } else {
                 iIsUserExsistCallback(false)
@@ -102,10 +103,16 @@ module room {
         }
 
         //________________________________________________________
-        public updateData(iTo: string, iChild: string, iData: any) {
+        public updateFurnitureData(iID: string, iData: any,) {
             clearTimeout(this.mUpdateFireBaseTimeOut);
-            this.mUpdateFireBaseTimeOut = setTimeout(() => this.sendDataToFireBase(iTo, iChild, iData), 1000)
+            this.mUpdateFireBaseTimeOut = setTimeout(() => this.sendDataToFireBase("/users/" + this.mUserName + "/furniture", iID, iData));
+
         }
+
+        public updateMetaData(iData: any) {
+            this.sendDataToFireBase("/users/" + this.mUserName, "Metadata", iData);
+        }
+        
 
 
         //____________________________________________________

@@ -94,7 +94,7 @@ namespace room {
                 return
             }
             this.mFurniture.CopyFrom(aTempFurniture);
-            FireBaseProxy.instance().updateData("/users/eyal1163/furniture", this.mFurniture.getIndexData().toString(), this.mFurniture.getObject());
+            FireBaseProxy.instance().updateFurnitureData(this.mFurniture.getIndexData().toString(), this.mFurniture.getObject());
             this.mFurniture.UpdateModel();
         }
          //__________________________________________________________

@@ -47,7 +47,7 @@ namespace room {
             this.mDiv3D.onmousemove = (iEvent: MouseEvent) => this.onMouseMove(iEvent);
             this.mDiv3D.onmouseup = (iEvent: MouseEvent) => this.onMouseUp(iEvent);
 
-            
+
             this.mRenderer = new THREE.WebGLRenderer({ antialias: true });
             const aRect = this.mDiv3D.getBoundingClientRect();
             this.mRenderer.setSize(aRect.width, aRect.height);
@@ -175,7 +175,7 @@ namespace room {
                 if (this.mCurrentlyEditing == aFurniture) {
                     aFurniture.traverse((iFurnitureMesh: THREE.Object3D) => this.changeMeshColor(iFurnitureMesh, 0x04ff00))
                     this.mIsInDrag = true;
-                    
+
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace room {
                 this.mCurrentlyEditing.traverse((iFurnitureMesh: THREE.Object3D) => this.changeMeshColor(iFurnitureMesh, 0xff0000))
             }
         }
-        
+
         //___________________________________________________________________________
 
         public changeMeshColor(iFurnitureMesh: THREE.Object3D, iColor: number) {
@@ -297,6 +297,8 @@ namespace room {
 
 
         }
+
+
         //___________________________________________________________________________
 
         private animate() {
@@ -322,6 +324,6 @@ namespace room {
             this.mOrbitControls.enabled = !iVal;
             this.mIsDragDropActive = iVal;
         }
+        //___________________________________________________________________________
     }
-
 }
