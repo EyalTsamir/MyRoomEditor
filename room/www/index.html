@@ -17,8 +17,8 @@
     <script src="js/code.js"></script>
 </head>
 <body>
-    <div id="login_and_register" style=" top:80px; left: 700px; position:absolute; font-size:30px;">
-        <div id="login">
+    <div id="login_and_register" >
+        <div id="login" style=" top:80px; left: 700px; position:absolute; font-size:30px;">
             <div id="failLogin" style="color:red; display:none"> Your username or password is incorrect </div>
 
             <div>
@@ -27,11 +27,35 @@
                 <label>password:     </label>
                 <input type="text" value="123456" id="Idpassword" placeholder="enter password" style="height:30px"><br>
                 <button id="loginBotton" style="position: absolute; left: 132.23px; top: 100px">login</button>
+                <button id="MoveToRegisterButton" style="position: absolute; left: 182.23px; top: 100px">Move to register</button>
+
             </div>
+         
+        </div>
+
+        <div id="register"  style=" top:80px; left: 700px; position:absolute; font-size:30px; display: none">
+            <div id="failRegister" style="color:red; display:none"> The username you entered already exists in the system or some of the information you entered is incorrect </div>
 
             <div>
+                <label>Please enter your new user name:   </label>
+                <input type="text" value="TestUserName" id="IdUserNameRegister" placeholder="enter the new user name" style="height:30px"><br>
+                <label>Please enter your new password:     </label>
+                <input type="text" value="TestPassword" id="IdPasswordRegister" placeholder="enter the new password" style="height:30px"><br>
+                <label>Please enter your room length:     </label>
+                <input type="number" value="30" id="IdRoomLengthRegister" placeholder="enter the new password" style="height:30px"><br>
+                <label>Please enter your room width:     </label>
+                <input type="number" value="20" id="IdRoomWidthRegister" placeholder="enter the new password" style="height:30px"><br>
+                <label>Please enter your age:     </label>
+                <input type="number" value="10" id="IdAgeRegister" placeholder="enter the new password" style="height:30px"><br>
+                <label>Please enter your email:     </label>
+                <input type="email" value="10" id="IdEmailRegister" placeholder="enter the new password" style="height:30px
+                <label>Please enter your Room name:   </label>
+                <input type="text" value="TestRoomName" id="IdRoomNameRegister" placeholder="enter the new user name" style="height:30px"><br>
+                <button id="RegisterBotton" style="position: absolute; left: 132.23px; top: 350px">Register</button>
+                <button id="MoveToLoginBotton" style="position: absolute; left: 202.23px; top: 350px">Move to login</button>
 
             </div>
+            
         </div>
 
     </div>

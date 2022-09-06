@@ -8,6 +8,8 @@ namespace room {
         private mFailLogin: HTMLElement;
         private mCallBack: Function;
         private mUserName: string;
+        private mRegisterDiv: HTMLElement;
+
 
         constructor(iLoginMenu: HTMLElement, iCallBack: Function)
         {
@@ -15,7 +17,10 @@ namespace room {
             this.mLoginMenuDiv = iLoginMenu;
             const aLoginBotton = document.getElementById("loginBotton")
             aLoginBotton.addEventListener("click", () => this.checkLogin())
+            const aMoveToRegisterButton = document.getElementById("MoveToRegisterButton")
+            aMoveToRegisterButton.addEventListener("click", () => this.MoveToRegister())
             this.mFailLogin = document.getElementById("failLogin")
+            this.mRegisterDiv = document.getElementById("register");
 
         }
         //______________________________________
@@ -37,8 +42,28 @@ namespace room {
                 this.mFailLogin.style.display = "block";
             }
         }
+        //______________________________________
+
+        private MoveToRegister() {
+            let aLoginMenu = document.getElementById("login");
+            aLoginMenu.style.display = "none";
+            let aRegisterMenu = document.getElementById("register");
+            aRegisterMenu.style.display = "block";
+            let aRegister = new Register(() => this.FinishRegister());
+            
+
+        }
 
 
+        private FinishRegister() {
+            this.mLoginMenuDiv.style.display = "block";
+            this.mRegisterDiv.style.display = "none";
+            const aFailRegister = document.getElementById("failRegister")
+            aFailRegister.style.display = "none";
+
+        }
+
+        
         private update(aDiv: HTMLElement) {
         }
 

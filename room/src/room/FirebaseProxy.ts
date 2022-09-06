@@ -17,7 +17,7 @@ module room {
 
         private mConfig: any
         private mDB: any;
-        private mUpdateFireBaseTimeOut : number;
+        private mUpdateFireBaseTimeOut: number;
 
         private constructor() {
 
@@ -58,7 +58,6 @@ module room {
             );
         }
         //___________________________________________
-
         public passwordVerificationHelper(iIsUserExsistCallback: Function, iPassword: string, iDataVal,) {
             if (iDataVal == iPassword) {
                 iIsUserExsistCallback(true)
@@ -67,12 +66,30 @@ module room {
             }
         }
         //_________________________________________________
+        public checkIfRegistrationCorrect(iUserName: string, iIsRegistrationCorrect: Function) {
+            let aItemsCatalogRef = this.mDB.ref("users/" + iUserName + "/_password"); //הבעיה: אם יש שם משתמש בצורה הזאת 
+            aItemsCatalogRef.on("value",
+                (iData) => {
+                    this.checkIfRegistrationCorrectHelper (iIsRegistrationCorrect, iData.val());
+                }
+            );
+        }
+
+        public checkIfRegistrationCorrectHelper(iIsRegistrationCorrectCallback: Function, iDataVal,) { // אמור לקבל בדאטא נאל אם אין משתמש בשם הזה
+            if (iDataVal == null) {
+                iIsRegistrationCorrectCallback(true)
+            } else {
+                iIsRegistrationCorrectCallback(false)
+            }
+        }
+        //___________________________________________
+
 
         public loadRoomData(iUserCode: string, iCallback: Function) {
             let aUserData = this.mDB.ref("users/" + iUserCode);
 
             aUserData.once("value",
-                (iData) => {iCallback(iData.val()); }
+                (iData) => { iCallback(iData.val()); }
             );
         }
         //________________________________________________________

@@ -18,7 +18,7 @@ namespace room {
         //______________________________________
 
         private createLogin() {
-            let aLoginMenu = document.getElementById("login_and_register");
+            let aLoginMenu = document.getElementById("login");
             this.mLogin = new Login(aLoginMenu, (iUserCode: string) => this.openEditorManager(iUserCode));
         }
         //__________________________________________
