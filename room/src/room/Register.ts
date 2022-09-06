@@ -42,8 +42,8 @@ namespace room {
                 aObject.Metadata.size = {}; 
                 aObject.Metadata.size.length = (document.getElementById("IdRoomLengthRegister") as HTMLInputElement).value; // להכניס מהשדה
                 aObject.Metadata.size.width = (document.getElementById("IdRoomWidthRegister") as HTMLInputElement).value; // להכניס מהשדה
-                aObject.passwoed = (document.getElementById("IdPasswordRegister") as HTMLInputElement).value;
                 aObject.email = (document.getElementById("IdEmailRegister") as HTMLInputElement).value;
+                aObject._passwoed = (document.getElementById("IdPasswordRegister") as HTMLInputElement).value;
                 FireBaseProxy.instance().sendDataToFireBase("/users", this.mUserName, aObject);
             }
         }
