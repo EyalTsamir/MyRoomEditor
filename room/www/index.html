@@ -17,45 +17,48 @@
     <script src="js/code.js"></script>
 </head>
 <body>
-    <div id="login_and_register" >
-        <div id="login" style=" top:80px; left: 700px; position:absolute; font-size:30px;">
-            <div id="failLogin" style="color:red; display:none"> Your username or password is incorrect </div>
+    <div id="login_and_register" style="background-color: cornsilk; width: 9000px; height: 9000px">
+        <div id="login">
+            <!--<div style="font-size: 28px; left:700px; top: 60px; position: absolute">Sign in</div>
+        <div id="failLogin" style="left: 650px; color:red; display: none; top: 100px; position: absolute"> Your username or password is incorrect </div>-->
 
-            <div>
-                <label>User name:   </label>
-                <input type="text" value="eyal1163" id="IdUserName" placeholder="enter user name" style="height:30px"><br>
-                <label>password:     </label>
-                <input type="text" value="123456" id="Idpassword" placeholder="enter password" style="height:30px"><br>
-                <button id="loginBotton" style="position: absolute; left: 132.23px; top: 100px">login</button>
-                <button id="MoveToRegisterButton" style="position: absolute; left: 182.23px; top: 100px">Move to register</button>
-
+            <div style=" top:110px; left: 700px; position:absolute;">
+                <div style="font-size: 28px;">Sign in</div><br />
+                <div id="failLogin" style="color:red; display: none; top: 30px;"> Your username or password is incorrect </div><br />
+                <!--<label>User name:   </label>-->
+                <!--<input type="text" value="eyal1163" id="IdUserName" placeholder="enter user name" style="height:30px"><br>-->
+                <input type="text" id="IdUserName" placeholder="User name" style="height:30px"><br>
+                <!--<label>password:     </label>-->
+                <!--<input type="text" value="123456" id="Idpassword" placeholder="enter password" style="height:30px"><br>-->
+                <input type="text" id="Idpassword" placeholder="Password" style="height:30px; margin-top:5px "><br>
+                <button id="loginBotton" style="position: absolute; left: 0%; top: 170px; font-family: Aharoni; height: 30px; background-color: palegreen ">login</button>
+                <button id="MoveToRegisterButton" style="position: absolute; left: 30%; top: 170px; font-family: Aharoni; height: 30px; background-color: rosybrown">Move to register</button>
             </div>
-         
+
         </div>
-
-        <div id="register"  style=" top:80px; left: 700px; position:absolute; font-size:30px; display: none">
-            <div id="failRegister" style="color:red; display:none"> The username you entered already exists in the system or some of the information you entered is incorrect </div>
-
+        <div id="failRegister" style="color: red; display: none; position: absolute; top: 155px; left: 900px; width: 300px"> The username you have entered already exists in the system or some of the information you entered is incorrect </div><br />
+        <div id="register" style="top:80px; left: 700px; position:absolute; left:610px; top:100px; display: none">
             <div>
-                <label>Please enter your new user name:   </label>
-                <input type="text" value="TestUserName" id="IdUserNameRegister" placeholder="enter the new user name" style="height:30px"><br>
-                <label>Please enter your new password:     </label>
-                <input type="text" value="TestPassword" id="IdPasswordRegister" placeholder="enter the new password" style="height:30px"><br>
-                <label>Please enter your room length:     </label>
-                <input type="number" value="30" id="IdRoomLengthRegister" placeholder="enter the new password" style="height:30px"><br>
-                <label>Please enter your room width:     </label>
-                <input type="number" value="20" id="IdRoomWidthRegister" placeholder="enter the new password" style="height:30px"><br>
-                <label>Please enter your age:     </label>
-                <input type="number" value="10" id="IdAgeRegister" placeholder="enter the new password" style="height:30px"><br>
-                <label>Please enter your email:     </label>
-                <input type="email" value="10" id="IdEmailRegister" placeholder="enter the new password" style="height:30px"><br>
-                <label>Please enter your Room name:   </label>
-                <input type="text" value="TestRoomName" id="IdRoomNameRegister" placeholder="enter the new user name" style="height:30px"><br>
-                <button id="RegisterBotton" style="position: absolute; left: 132.23px; top: 350px">Register</button>
-                <button id="MoveToLoginBotton" style="position: absolute; left: 202.23px; top: 350px">Move to login</button>
+                <div style="font-size: 28px;">Registration</div><br />
+                <!--<label>Please enter your new user name:   </label>-->
+                <input type="text" id="IdUserNameRegister" placeholder="User name" style="height: 30px; width: 230px"><br>
+                <!--<label>Please enter your new password:     </label>-->
+                <input type="text" id="IdPasswordRegister" placeholder="Password" style="height: 30px; margin-top: 5px; width: 230px "><br>
+                <!--<label>Please enter your room length:     </label>-->
+                <input type="number" id="IdRoomLengthRegister" placeholder="Room Length" style="height: 30px; margin-top:5px; width: 230px "><br>
+                <!--<label>Please enter your room width:     </label>-->
+                <input type="number" id="IdRoomWidthRegister" placeholder="Room width" style="height: 30px; margin-top: 5px; width: 230px "><br>
+                <!--<label>Please enter your age:     </label>-->
+                <input type="number" id="IdAgeRegister" placeholder="Your age" style="height: 30px; margin-top: 5px; width: 230px "><br>
+                <!--<label>Please enter your email:     </label>-->
+                <input type="email" id="IdEmailRegister" placeholder="Emai" style="height: 30px; margin-top: 5px; width: 230px "><br>
+                <!--<label>Please enter your Room name:   </label>-->
+                <input type="text" id="IdRoomNameRegister" placeholder="Room name" style="height: 30px; margin-top: 5px; width: 230px "><br>
+                <button id="RegisterBotton" style="position: absolute; left: 6%; top: 360px; font-family: Aharoni; font-size:15px; ">To register</button>
+                <button id="MoveToLoginBotton" style="position: absolute; left: 51%; top: 360px; font-family: Aharoni; font-size: 15px ">Back to login</button>
 
             </div>
-            
+
         </div>
 
     </div>

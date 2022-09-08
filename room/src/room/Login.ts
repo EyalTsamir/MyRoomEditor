@@ -52,6 +52,9 @@ namespace room {
             const aFailRegister = document.getElementById("failRegister")
             aFailRegister.style.display = "none";
             let aRegister = new Register(() => this.FinishRegister());
+            let aLoginAndRegisterDiv = document.getElementById("login_and_register");
+            aLoginAndRegisterDiv.style.backgroundColor = "aliceblue";
+
 
             
 
@@ -61,6 +64,10 @@ namespace room {
         private FinishRegister() {
             this.mLoginMenuDiv.style.display = "block";
             this.mRegisterDiv.style.display = "none";
+            let aLoginAndRegisterDiv = document.getElementById("login_and_register");
+            aLoginAndRegisterDiv.style.backgroundColor = "cornsilk";
+            let afailLoginDiv = document.getElementById("failLogin");
+            afailLoginDiv.style.display = "none";
 
 
         }
