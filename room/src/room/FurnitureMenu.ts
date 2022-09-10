@@ -117,14 +117,17 @@ namespace room {
             if (!this.mEditorManager.isDragDropActive) {
                 this.mEditorManager.isDragDropActive = true;
                 this.mDragDropButton.style.backgroundColor = "green";
+                this.mDragDropButton.innerHTML = "Stop Drag"
             } else {
                 this.mEditorManager.isDragDropActive = false;
-                this.mDragDropButton.style.backgroundColor = "white";
+                this.mDragDropButton.style.backgroundColor = "yellow";
+                this.mDragDropButton.innerHTML = "Start Drag"
             }
         }
         
         private deleteFernicher() {
             this.mEditPanelDiv.style.display = "none";
+            this.mEditorManager.isDragDropActive = false;
             this.mEditorManager.deleteFernicher(this.mFurniture);
         }
     }

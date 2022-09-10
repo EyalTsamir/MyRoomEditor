@@ -42,8 +42,8 @@ namespace room {
         private LoadRoomDataHelper(iData: any) {
             this.mRoomData = iData;
             this.mTopMenu = new TopMenu(this, this.mRoomData, this.mRoom3D);
-            let alength = this.mRoomData.Metadata.size.length
-            let aWidth = this.mRoomData.Metadata.size.width
+            let alength = parseFloat(this.mRoomData.Metadata.size.length);
+            let aWidth = parseFloat(this.mRoomData.Metadata.size.width);
             this.mRoom3D.createRoom(aWidth, alength);
             if (this.mRoomData.furniture == null) {
                 this.mRoomData.furniture = new Array<any>();
