@@ -105,7 +105,7 @@ module room {
         //________________________________________________________
         public updateFurnitureData(iID: string, iData: any,) {
             clearTimeout(this.mUpdateFireBaseTimeOut);
-            this.mUpdateFireBaseTimeOut = setTimeout(() => this.sendDataToFireBase("/users/" + this.mUserName + "/furniture", iID, iData));
+            this.mUpdateFireBaseTimeOut = setTimeout(() => this.sendDataToFireBase("/users/" + this.mUserName + "/furniture", iID, iData), 100);
 
         }
 

@@ -16,7 +16,7 @@ namespace room {
         private mScaleZInput: HTMLInputElement
         private mNameFurnitureDiv: HTMLElement;
         private mCancelButton: HTMLElement;
-        private mDeleteButton: HTMLElement;1
+        private mDeleteButton: HTMLElement;
         private mDragDropButton: HTMLElement;
         private mEditorManager: EditorManager;
         
@@ -51,13 +51,7 @@ namespace room {
             this.mFurniture = iFurniture;
             this.mEditPanelDiv.style.display = "block";
             this.mNameFurnitureDiv.innerHTML = this.mFurniture.getName();
-            this.mPositionXInput.value = "" + this.mFurniture.getPositionX();
-            this.mPositionYInput.value = "" + this.mFurniture.getPositionY();
-            this.mPositionZInput.value = "" + this.mFurniture.getPositionZ();
-            this.mRotationYInput.value = "" + this.mFurniture.getRotationY();
-            this.mScaleXInput.value = "" + this.mFurniture.getScaleX() * 100;
-            this.mScaleYInput.value = "" + this.mFurniture.getScaleY() * 100;
-            this.mScaleZInput.value = "" + this.mFurniture.getScaleZ() * 100;
+            this.updatePanelByObject();
 
         }
        //__________________________________________________________
@@ -66,6 +60,7 @@ namespace room {
             if (this.mFurniture == null) {
                 return
             }
+
             let aObject: any = {};
             aObject.itemName = this.mFurniture.getName();
             aObject.position = {};
@@ -93,6 +88,7 @@ namespace room {
             if (this.mFurniture.isEqualParameter(aTempFurniture)) {
                 return
             }
+            this.mEditorManager.addToUndo(this.mFurniture);
             this.mFurniture.CopyFrom(aTempFurniture);
             FireBaseProxy.instance().updateFurnitureData(this.mFurniture.getIndexData().toString(), this.mFurniture.getObject());
             this.mFurniture.UpdateModel();
@@ -103,7 +99,19 @@ namespace room {
         public updatePositionValues(iZ: number, iX :number) {
             this.mPositionXInput.value = "" + iX;
             this.mPositionZInput.value = "" + iZ;
-            
+        }
+
+        public updatePanelByObject() {
+            if (this.mFurniture == null) {
+                return
+            }
+            this.mPositionXInput.value = "" + this.mFurniture.getPositionX();
+            this.mPositionYInput.value = "" + this.mFurniture.getPositionY();
+            this.mPositionZInput.value = "" + this.mFurniture.getPositionZ();
+            this.mRotationYInput.value = "" + this.mFurniture.getRotationY();
+            this.mScaleXInput.value = "" + this.mFurniture.getScaleX() * 100;
+            this.mScaleYInput.value = "" + this.mFurniture.getScaleY() * 100;
+            this.mScaleZInput.value = "" + this.mFurniture.getScaleZ() * 100;
         }
         //_____________________________________________________________
 
@@ -111,6 +119,7 @@ namespace room {
             this.mEditPanelDiv.style.display = "none";
             this.mEditorManager.isDragDropActive = false;
             this.mEditorManager.changeMeshColor(this.mFurniture.getModel(), 0xffffff)
+            this.mFurniture = null;
         }
         private onDragDrop() {
 
@@ -118,6 +127,7 @@ namespace room {
                 this.mEditorManager.isDragDropActive = true;
                 this.mDragDropButton.style.backgroundColor = "green";
                 this.mDragDropButton.innerHTML = "Stop Drag"
+
             } else {
                 this.mEditorManager.isDragDropActive = false;
                 this.mDragDropButton.style.backgroundColor = "yellow";

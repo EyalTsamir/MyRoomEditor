@@ -15,8 +15,8 @@ namespace room {
 
         //___________________________________________________________
 
-        public add(iFurnitureData: any, iFurnitureID: number): Furniture {
-            let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureID);
+        public add(iFurnitureData: any, iFurnitureID: number, iUUId? : string): Furniture {
+            let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureID, iUUId);
             if (this.mfirst == null) { ///////////////////////////
                 this.mfirst = aFurniture;
                 this.mLast = aFurniture
@@ -73,9 +73,6 @@ namespace room {
 
         }
 
-
-
-
         public getFrist(): Furniture {
             return this.mfirst;
         }
@@ -110,6 +107,17 @@ namespace room {
                 i++;
             }
             return i
+        }
+        //_____________________________________________________
+        public findFurnitureByUUID(iUUID: string): Furniture {
+            let atemp: Furniture = this.mfirst;
+            while (atemp != null) {
+                if (atemp.getUuId() == iUUID) {
+                    return atemp;
+                }
+                atemp = atemp.getNext();
+            }
+            return null;
         }
     }
 }

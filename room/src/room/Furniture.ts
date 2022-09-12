@@ -4,6 +4,8 @@ namespace room {
 
     export class Furniture {
         private mID: number;
+        private mUUID: string;
+
         private mName: string;
         private mPositionX: number;
         private mPositionY: number;
@@ -17,7 +19,9 @@ namespace room {
 
 
 
-        constructor(iDataFurniture: any, iID: number) {
+
+
+        constructor(iDataFurniture: any, iID: number, iUUID? :string) {
             this.mName = iDataFurniture.itemName;
             this.mPositionX = iDataFurniture.position.x;
             this.mPositionY = iDataFurniture.position.y;
@@ -27,6 +31,12 @@ namespace room {
             this.mScaleY = iDataFurniture.scale.y;
             this.mScaleZ = iDataFurniture.scale.z;
             this.mID = iID;
+            if (iUUID == null) {
+                const random = Math.random() * Date.now();
+                    this.mUUID = Number(random).toString(32); //פונקציה
+            } else {
+                this.mUUID = iUUID
+            }
         }
         //___________________________________________________________ Get Object
 
@@ -139,6 +149,10 @@ namespace room {
 
         public getIndexData(): number {
             return this.mID;
+        }
+
+        public getUuId(): string {
+            return this.mUUID;
         }
 
         //___________________________________________________________ Set functions

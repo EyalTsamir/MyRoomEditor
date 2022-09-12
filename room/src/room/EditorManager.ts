@@ -11,6 +11,7 @@ namespace room {
         private mFurnitureMenu: FurnitureMenu;
         private mFurnitureNodeManager: FurnitureNodeManager;
         private mTopMenu: TopMenu;
+        private mUndoRedoManager: UndoRedoManager;
 
         constructor(iUserCode: string) {
             this.mUserCode = iUserCode;
@@ -21,6 +22,7 @@ namespace room {
             this.LoadRoomData();
             this.mFurnitureNodeManager = new FurnitureNodeManager();
             this.mFurnitureMenu = new FurnitureMenu(this, this.mFurnitureNodeManager);
+            this.mUndoRedoManager = new UndoRedoManager(this, this.mSidePanel, (iUUID) => this.mFurnitureNodeManager.findFurnitureByUUID(iUUID));
         }
         //______________________________________
 
@@ -65,7 +67,7 @@ namespace room {
         }
         //________________________________________________________________
 
-        public sendFurnitureToBuild(iname: string, iCatalog: any) {
+        public sendFurnitureToBuild(iname: string, iCatalog: any, iUUid? : string) {
             let aObject: any = {};
             aObject.itemName = iname;
             aObject.position = {};
@@ -78,7 +80,7 @@ namespace room {
             aObject.scale.y = iCatalog[iname].scale;
             aObject.scale.z = iCatalog[iname].scale;
             let aFurnitureID = this.mFurnitureNodeManager.getEmptyID();
-            let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID);
+            let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID, iUUid);
             this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture)
             FireBaseProxy.instance().updateFurnitureData(aFurnitureID.toString(), aObject);
         }
@@ -113,6 +115,14 @@ namespace room {
         //________________________________
         public changeMeshColor(iFurniture3DObg: THREE.Object3D, icolor: number) {
             iFurniture3DObg.traverse((iFurnitureMesh: THREE.Object3D) => this.mRoom3D.changeMeshColor(iFurnitureMesh, icolor))
+        }
+        //_____________________________________________________
+        public updatePanelByObject() {
+            this.mFurnitureMenu.updatePanelByObject()
+        }        //_____________________________________________________
+
+        public addToUndo(iFurniture: Furniture) {
+            this.mUndoRedoManager.addToUndo(iFurniture.getObject(), iFurniture.getIndexData(), iFurniture.getUuId());
         }
         
         

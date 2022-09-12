@@ -42,5 +42,9 @@ namespace room {
         public getModelURL(iItemName: string): string {
             return this.mCatalog[iItemName].model;
         }
+
+        public getCatalog(): any {
+            return this.mCatalog;
+        }
     }
 }
