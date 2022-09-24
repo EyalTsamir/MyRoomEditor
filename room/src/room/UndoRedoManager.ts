@@ -34,12 +34,16 @@ namespace room {
             let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureID, iUUID);
             aFurniture.setNext(this.mfirstUndo)
             this.mfirstUndo = aFurniture;
+
+
         }
         //___________________________________________________________
 
-        private addToRedo(iFurniture: Furniture) {
-            iFurniture.setNext(this.mfirstRedo)
-            this.mfirstRedo = iFurniture;
+        private addToRedo(iFurnitureData: any, iFurnitureID: number, iUUID: string) {
+            let aFurniture: Furniture = new Furniture(iFurnitureData, iFurnitureID, iUUID);
+            aFurniture.setNext(this.mfirstRedo)
+            this.mfirstRedo = aFurniture;
+
         }
         //__________________________________________________
 
@@ -47,31 +51,43 @@ namespace room {
             if (this.mfirstUndo != null) {
                 let aToUndo = this.mfirstUndo;
                 this.mfirstUndo = this.mfirstUndo.getNext();
-                this.addToRedo(aToUndo);
+                this.addToRedo(aToUndo.getObject(), aToUndo.getIndexData(), aToUndo.getUuId());
                 if (this.mFindFurnitureFunction(aToUndo.getUuId()) != null) { //יש רהיט
                     let iNew = this.mFindFurnitureFunction(aToUndo.getUuId())
                     iNew.CopyFrom(aToUndo);
                     iNew.UpdateModel();
                     this.mEditorManager.updatePanelByObject()
-                    FireBaseProxy.instance().updateFurnitureData(iNew.getIndexData().toString(), aToUndo.getObject);
+                    FireBaseProxy.instance().updateFurnitureData(iNew.getIndexData().toString(), aToUndo.getObject());
                 } else { //אין רהיט
                     this.mEditorManager.sendFurnitureToBuild(aToUndo.getName(), this.mSidePanel.getCatalog(), aToUndo.getUuId())
                     let iNew = this.mFindFurnitureFunction(aToUndo.getUuId())
                     iNew.CopyFrom(aToUndo);
                     iNew.UpdateModel();
-                    FireBaseProxy.instance().updateFurnitureData((iNew.getIndexData()).toString(), aToUndo.getObject);
+                    FireBaseProxy.instance().updateFurnitureData((iNew.getIndexData()).toString(), aToUndo.getObject());
                 }
             }
         }
 
-        public Redo(): Furniture {
+        public Redo() {
             if (this.mfirstRedo != null) {
-                let temp = this.mfirstRedo;
+                let aToRedo = this.mfirstRedo;
                 this.mfirstRedo = this.mfirstRedo.getNext();
-                this.addToUndo(temp.getObject(), temp.getIndexData(), temp.getUuId());
-                return temp;
+                this.addToUndo(aToRedo.getObject(), aToRedo.getIndexData(), aToRedo.getUuId());
+                if (this.mFindFurnitureFunction(aToRedo.getUuId()) != null) { //יש רהיט
+                    let iNew = this.mFindFurnitureFunction(aToRedo.getUuId())
+                    iNew.CopyFrom(aToRedo);
+                    iNew.UpdateModel();
+                    this.mEditorManager.updatePanelByObject()
+                    FireBaseProxy.instance().updateFurnitureData(iNew.getIndexData().toString(), aToRedo.getObject());
+                } else { //אין רהיט
+                    this.mEditorManager.sendFurnitureToBuild(aToRedo.getName(), this.mSidePanel.getCatalog(), aToRedo.getUuId())
+                    let iNew = this.mFindFurnitureFunction(aToRedo.getUuId())
+                    iNew.CopyFrom(aToRedo);
+                    iNew.UpdateModel();
+                    FireBaseProxy.instance().updateFurnitureData((iNew.getIndexData()).toString(), aToRedo.getObject());
+                }
+            
             }
-            return null
 
         }
 

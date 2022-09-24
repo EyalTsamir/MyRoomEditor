@@ -57,6 +57,9 @@ namespace room {
 
         //____________________________________________________________Update Model
         public UpdateModel() {
+            if (this.mModel3D == null) {
+
+            }
             this.mModel3D.position.x = this.mPositionX;
             this.mModel3D.position.y = this.mPositionY;
             this.mModel3D.position.z = this.mPositionZ;

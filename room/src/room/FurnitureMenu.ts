@@ -138,6 +138,7 @@ namespace room {
         private deleteFernicher() {
             this.mEditPanelDiv.style.display = "none";
             this.mEditorManager.isDragDropActive = false;
+            this.mEditorManager.addToUndo(this.mFurniture);
             this.mEditorManager.deleteFernicher(this.mFurniture);
         }
     }
