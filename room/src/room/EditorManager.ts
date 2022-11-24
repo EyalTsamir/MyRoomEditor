@@ -79,6 +79,7 @@ namespace room {
             aObject.scale.x = iCatalog[iname].scale;
             aObject.scale.y = iCatalog[iname].scale;
             aObject.scale.z = iCatalog[iname].scale;
+            aObject.URl = iCatalog[iname].model;
             let aFurnitureID = this.mFurnitureNodeManager.getEmptyID();
             let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID, iUUid);
             this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture)

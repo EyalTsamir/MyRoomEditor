@@ -10,7 +10,7 @@
     <UseGlobalApplicationHostFile />
     <ToolsVersionPromptShown>4.4</ToolsVersionPromptShown>
     <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <ActiveDebugTarget />
   </PropertyGroup>
   <ProjectExtensions>

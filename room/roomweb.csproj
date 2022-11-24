@@ -96,8 +96,17 @@
   <ItemGroup>
     <TypeScriptCompile Include="node_modules\types\Tweener.d.ts" />
     <TypeScriptCompile Include="src\room\EditorManager.ts" />
-    <TypeScriptCompile Include="src\room\SidePanel.ts" />
+    <TypeScriptCompile Include="src\room\FirebaseProxy.ts" />
+    <TypeScriptCompile Include="src\room\Furniture.ts" />
+    <TypeScriptCompile Include="src\room\FurnitureMenu.ts" />
+    <TypeScriptCompile Include="src\room\FurnitureNodeManager.ts" />
+    <TypeScriptCompile Include="src\room\Login.ts" />
     <TypeScriptCompile Include="src\room\Main.ts" />
+    <TypeScriptCompile Include="src\room\Register.ts" />
+    <TypeScriptCompile Include="src\room\Room3D.ts" />
+    <TypeScriptCompile Include="src\room\SidePanel.ts" />
+    <TypeScriptCompile Include="src\room\TopMenu.ts" />
+    <TypeScriptCompile Include="src\room\UndoRedoManager.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
