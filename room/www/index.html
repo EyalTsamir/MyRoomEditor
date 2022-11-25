@@ -30,8 +30,8 @@
             <!--<div style="font-size: 28px; left:700px; top: 60px; position: absolute">Sign in</div>
         <div id="failLogin" style="left: 650px; color:red; display: none; top: 100px; position: absolute"> Your username or password is incorrect </div>-->
 
-            <div>
-                <div style="font-size: 28px;">Sign in</div><br />
+            <div style="position:relative; left: 16%;">
+                <div style="font-size: 28px; position: relative; left: 19%; ">Sign in</div><br />
                 <div id="failLogin" style="color:red; display: none; top: 30px;"> Your username or password is incorrect </div><br />
                 <!--<label>User name:   </label>-->
                 <!--<input type="text" value="eyal1163" id="IdUserName" placeholder="enter user name" style="height:30px"><br>-->
@@ -44,9 +44,9 @@
             </div>
 
         </div>
-       <div id="register" style="display: none">
+       <div id="register" style="display: none; position:relative; left: 3%;">
            <div>
-               <div style="font-size: 28px;">Registration</div><br />
+               <div style="font-size: 28px; position:relative; left: 21%">Registration</div><br />
                <div id="failRegister" style="color: red; display: none; top: 155px; left: 900px; width: 300px"> The username you have entered already exists in the system or some of the information you entered is incorrect </div><br />
                <!--<label>Please enter your new user name:   </label>-->
                <input type="text" id="IdUserNameRegister" placeholder="User name" style="height: 30px; width: 230px"><br>
@@ -72,8 +72,10 @@
     </div>
     <div id="3D_page" style="position:fixed; width:100%;top:0px;bottom:0px; display: none">
         <label style="font-size: 20px">Furniture menu</label>
-        <div id="side_menu_div" style="bottom: 20px; top: 40px; position: absolute; overflow-y: scroll; border: solid; width: 130px; filter: drop-shadow(2px 2px 2px #806080); ">
-            <div id="item" style="position:absolute; left:5px; border-color:darkred">
+        <br />
+        <input type="text" id="IDFurnitureSearch" style="height: 10px; width:140px" placeholder="Search here">
+        <div id="side_menu_div" style="bottom: 20px; top: 50px; position: absolute; overflow-y: scroll; border: solid; width: 130px; filter: drop-shadow(2px 2px 2px #806080); ">
+            <div id="item" style="position: absolute; left: 5px; border-color:darkred">
                 <label style="z-index:16000">Furniture name</label>
                 <br />
                 <img src="images/303024.jpg" id="main_img" style=" width:100px; height: 80px" />
@@ -90,26 +92,26 @@
             <button id="RedoButton" style="">Redo</button>
 
         </div>
-        <div id="Furniture_menu" style="display: none; top: 60px; position: absolute; border: solid; left: 160px;z-index:5000;background-color:azure; padding:10px">
-            <h3 id="NameOfEditedFurniture" style="font-size: 20px">Furniture edit menu</h3>
-            <label>Position X:   </label>
-            <input type="number" id="PositionX" style="height:10px" value="44"><br>
-            <label>Position Y:   </label>
-            <input type="number" id="PositionY" style="height:10px" value=""><br>
-            <label>Position Z:   </label>
-            <input type="number" id="PositionZ" style="height:10px" value=""><br>
-            <label>Rotation:   </label>
-            <input type="number" id="RotationY" style="height:10px" value=""><br>
-            <label>Scale X:   </label>
-            <input type="number" id="ScaleX" style="height:10px" value=""><br>
-            <label>Scale Y:   </label>
-            <input type="number" id="ScaleY" style="height:10px" value=""><br>
-            <label>Scale Y:   </label>
-            <input type="number" id="ScaleZ" style="height:10px" value=""><br><br>
+        <div id="Furniture_menu" style="display: none; top: 60px; position: absolute; border: solid; left: 160px;z-index:5000;background-color:azure; padding:10px; height:270px; width:210px">
+            <h3 id="NameOfEditedFurniture" style="font-size: 20px; position:absolute; left: 90px">Furniture edit menu</h3>
+            <label style="position:absolute; left: 40px; top:65px">Position X:</label>
+            <input type="number" id="PositionX" style="height: 10px; position: absolute; left: 125px; width: 55px; top: 65px" value="44"><br>
+            <label style="position: absolute; left: 40px; top: 90px">Position Y:</label>
+            <input type="number" id="PositionY" style="height: 10px; position: absolute; left: 125px; width: 55px; top: 90px" value="44"><br>
+            <label style="position: absolute; left: 40px; top: 115px">Position Z:</label>
+            <input type="number" id="PositionZ" style="height: 10px; position: absolute; left: 125px; width: 55px; top: 115px" value="44"><br>
+            <label style="position: absolute; left: 40px; top: 140px">Rotation:</label>
+            <input type="number" id="RotationY" style="height: 10px; position: absolute; left: 125px; width: 55px; top: 140px" value="44"><br>
+            <label style="position: absolute; left: 40px; top: 165px">Width:</label>
+            <input type="number" id="ScaleX" style="height: 10px; position: absolute; left: 125px; width: 55px; top: 165px" value="44"><br>
+            <label style="position: absolute; left: 40px; top: 190px">Height:</label>
+            <input type="number" id="ScaleY" style="height: 10px; position: absolute; left: 125px; width: 55px; top: 190px" value="44"><br>
+            <label style="position: absolute; left: 40px; top: 215px ">Length:</label>
+            <input type="number" id="ScaleZ" style="height: 10px; position: absolute; left: 125px; width: 55px; top: 215px " value="44"><br><br>
 
-            <button id="CancelButton" style="">Close</button>
-            <button id="DeleteButton" style="">Delete</button>
-            <button id="DragDrop" style=" background-color:yellow"> Start Drag </button>
+            <button id="CancelButton" style="position: absolute; top:250px">Close</button>
+            <button id="DeleteButton" style="position: absolute; top: 250px; left: 70px">Delete</button>
+            <button id="DragDrop" style=" position: absolute; top: 250px; left: 140px; background-color:yellow"> Start Drag </button>
 
 
         </div>
