@@ -261,19 +261,19 @@ namespace room {
             aWall.position.x = iWidth / 2;
             aWall.position.y = Room3D.HEIGHT / 2;
 
-            aGeometry = new THREE.BoxGeometry(0.2, Room3D.HEIGHT + Room3D.WALL_WIDTH, iLength);
+            aGeometry = new THREE.BoxGeometry(Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, iLength);
             aMaterial = new THREE.MeshPhongMaterial();
             const aWall2 = new THREE.Mesh(aGeometry, aMaterial);
             aWall2.position.x = -1 * iWidth / 2;
             aWall2.position.y = Room3D.HEIGHT / 2;
 
-            aGeometry = new THREE.BoxGeometry(iWidth + Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, 0.2);
+            aGeometry = new THREE.BoxGeometry(iWidth + Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, Room3D.WALL_WIDTH);
             aMaterial = new THREE.MeshPhongMaterial();
             const aWall3 = new THREE.Mesh(aGeometry, aMaterial);
             aWall3.position.z = -1 * iLength / 2;
             aWall3.position.y = Room3D.HEIGHT / 2;
 
-            aGeometry = new THREE.BoxGeometry(iWidth + Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, 0.2);
+            aGeometry = new THREE.BoxGeometry(iWidth + Room3D.WALL_WIDTH, Room3D.HEIGHT + Room3D.WALL_WIDTH, Room3D.WALL_WIDTH);
             aMaterial = new THREE.MeshPhongMaterial();
             const aWall4 = new THREE.Mesh(aGeometry, aMaterial);
             aWall4.position.z = iLength / 2;

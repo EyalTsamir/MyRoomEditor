@@ -80,8 +80,10 @@ namespace room {
             aObject.scale.y = iCatalog[iname].scale;
             aObject.scale.z = iCatalog[iname].scale;
             aObject.URl = iCatalog[iname].model;
+
             let aFurnitureID = this.mFurnitureNodeManager.getEmptyID();
             let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID, iUUid);
+            aObject.UUID = aNewFurniture.getUuId();
             this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture)
             FireBaseProxy.instance().updateFurnitureData(aFurnitureID.toString(), aObject);
         }
@@ -98,7 +100,7 @@ namespace room {
             let aIndex = iFurniture.getIndexData();
             iFurniture.setName("Deleted")
             let aObj = iFurniture.getObject();
-            FireBaseProxy.instance().sendDataToFireBase("/users/eyal1163/furniture", aIndex.toString(), aObj);
+            FireBaseProxy.instance().updateFurnitureData(aIndex.toString(), aObj);
             this.mRoom3D.deletModel(iFurniture.getModel())
             let aToDelet = this.mFurnitureNodeManager.deleteFernicher(iFurniture);
         }

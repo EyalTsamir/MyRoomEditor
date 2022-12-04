@@ -17,10 +17,6 @@ namespace room {
         private mNext: Furniture;
         private mModel3D: THREE.Object3D;
 
-
-
-
-
         constructor(iDataFurniture: any, iID: number, iUUID? :string) {
             this.mName = iDataFurniture.itemName;
             this.mPositionX = iDataFurniture.position.x;
