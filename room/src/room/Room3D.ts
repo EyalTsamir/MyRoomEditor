@@ -237,16 +237,10 @@ namespace room {
             while (this.mWalls.length > 0) {
                 this.mScene.remove(this.mWalls.pop());
             }
-            let aGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+
+
+            let aGeometry = new THREE.BoxGeometry(iWidth, Room3D.WALL_WIDTH, iLength);
             let aMaterial = new THREE.MeshPhongMaterial();
-            const aCube = new THREE.Mesh(aGeometry, aMaterial);
-            aCube.position.x = 0;
-            aCube.position.y = 0;
-            aCube.position.z = 0;
-
-
-            aGeometry = new THREE.BoxGeometry(iWidth, Room3D.WALL_WIDTH, iLength);
-            aMaterial = new THREE.MeshPhongMaterial();
             this.mFloor = new THREE.Mesh(aGeometry, aMaterial);
             this.mFloor.position.y = Room3D.Y_FLOOR;
 
@@ -288,7 +282,6 @@ namespace room {
 
             this.mScene.add(this.mFloor);
             //this.mScene.add(aTop);
-            this.mScene.add(aCube);
             this.mScene.add(aWall);
             this.mScene.add(aWall2);
             this.mScene.add(aWall3);
