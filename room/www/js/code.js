@@ -10,6 +10,7 @@ var room;
             this.LoadRoomData();
             this.mFurnitureNodeManager = new room.FurnitureNodeManager();
             this.mFurnitureMenu = new room.FurnitureMenu(this, this.mFurnitureNodeManager);
+            this.mUndoRedoManager = new room.UndoRedoManager(this, this.mSidePanel, (iUUID) => this.mFurnitureNodeManager.findFurnitureByUUID(iUUID));
         }
         //______________________________________
         createSidePanel() {
@@ -44,7 +45,7 @@ var room;
             }
         }
         //________________________________________________________________
-        sendFurnitureToBuild(iname, iCatalog) {
+        sendFurnitureToBuild(iname, iCatalog, iUUid) {
             let aObject = {};
             aObject.itemName = iname;
             aObject.position = {};
@@ -56,8 +57,9 @@ var room;
             aObject.scale.x = iCatalog[iname].scale;
             aObject.scale.y = iCatalog[iname].scale;
             aObject.scale.z = iCatalog[iname].scale;
+            aObject.URl = iCatalog[iname].model;
             let aFurnitureID = this.mFurnitureNodeManager.getEmptyID();
-            let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID);
+            let aNewFurniture = this.mFurnitureNodeManager.add(aObject, aFurnitureID, iUUid);
             this.mRoom3D.addModel(iCatalog[iname].model, aNewFurniture);
             room.FireBaseProxy.instance().updateFurnitureData(aFurnitureID.toString(), aObject);
         }
@@ -87,6 +89,13 @@ var room;
         //________________________________
         changeMeshColor(iFurniture3DObg, icolor) {
             iFurniture3DObg.traverse((iFurnitureMesh) => this.mRoom3D.changeMeshColor(iFurnitureMesh, icolor));
+        }
+        //_____________________________________________________
+        updatePanelByObject() {
+            this.mFurnitureMenu.updatePanelByObject();
+        } //_____________________________________________________
+        addToUndo(iFurniture) {
+            this.mUndoRedoManager.addToUndo(iFurniture.getObject(), iFurniture.getIndexData(), iFurniture.getUuId());
         }
     }
     room.EditorManager = EditorManager;
@@ -166,7 +175,7 @@ var room;
         //________________________________________________________
         updateFurnitureData(iID, iData) {
             clearTimeout(this.mUpdateFireBaseTimeOut);
-            this.mUpdateFireBaseTimeOut = setTimeout(() => this.sendDataToFireBase("/users/" + this.mUserName + "/furniture", iID, iData), 300);
+            this.mUpdateFireBaseTimeOut = setTimeout(() => this.sendDataToFireBase("/users/" + this.mUserName + "/furniture", iID, iData), 100);
         }
         updateMetaData(iData) {
             this.sendDataToFireBase("/users/" + this.mUserName, "Metadata", iData);
@@ -181,7 +190,7 @@ var room;
 var room;
 (function (room) {
     class Furniture {
-        constructor(iDataFurniture, iID) {
+        constructor(iDataFurniture, iID, iUUID) {
             this.mName = iDataFurniture.itemName;
             this.mPositionX = iDataFurniture.position.x;
             this.mPositionY = iDataFurniture.position.y;
@@ -191,6 +200,13 @@ var room;
             this.mScaleY = iDataFurniture.scale.y;
             this.mScaleZ = iDataFurniture.scale.z;
             this.mID = iID;
+            if (iUUID == null) {
+                const random = Math.random() * Date.now();
+                this.mUUID = Number(random).toString(32); //�������
+            }
+            else {
+                this.mUUID = iUUID;
+            }
         }
         //___________________________________________________________ Get Object
         getObject() {
@@ -209,6 +225,8 @@ var room;
         }
         //____________________________________________________________Update Model
         UpdateModel() {
+            if (this.mModel3D == null) {
+            }
             this.mModel3D.position.x = this.mPositionX;
             this.mModel3D.position.y = this.mPositionY;
             this.mModel3D.position.z = this.mPositionZ;
@@ -283,6 +301,9 @@ var room;
         getIndexData() {
             return this.mID;
         }
+        getUuId() {
+            return this.mUUID;
+        }
         //___________________________________________________________ Set functions
         setName(iName) {
             this.mName = iName;
@@ -339,13 +360,7 @@ var room;
             this.mFurniture = iFurniture;
             this.mEditPanelDiv.style.display = "block";
             this.mNameFurnitureDiv.innerHTML = this.mFurniture.getName();
-            this.mPositionXInput.value = "" + this.mFurniture.getPositionX();
-            this.mPositionYInput.value = "" + this.mFurniture.getPositionY();
-            this.mPositionZInput.value = "" + this.mFurniture.getPositionZ();
-            this.mRotationYInput.value = "" + this.mFurniture.getRotationY();
-            this.mScaleXInput.value = "" + this.mFurniture.getScaleX() * 100;
-            this.mScaleYInput.value = "" + this.mFurniture.getScaleY() * 100;
-            this.mScaleZInput.value = "" + this.mFurniture.getScaleZ() * 100;
+            this.updatePanelByObject();
         }
         //__________________________________________________________
         cuntinusUpdate() {
@@ -379,6 +394,7 @@ var room;
             if (this.mFurniture.isEqualParameter(aTempFurniture)) {
                 return;
             }
+            this.mEditorManager.addToUndo(this.mFurniture);
             this.mFurniture.CopyFrom(aTempFurniture);
             room.FireBaseProxy.instance().updateFurnitureData(this.mFurniture.getIndexData().toString(), this.mFurniture.getObject());
             this.mFurniture.UpdateModel();
@@ -388,11 +404,24 @@ var room;
             this.mPositionXInput.value = "" + iX;
             this.mPositionZInput.value = "" + iZ;
         }
+        updatePanelByObject() {
+            if (this.mFurniture == null) {
+                return;
+            }
+            this.mPositionXInput.value = "" + this.mFurniture.getPositionX();
+            this.mPositionYInput.value = "" + this.mFurniture.getPositionY();
+            this.mPositionZInput.value = "" + this.mFurniture.getPositionZ();
+            this.mRotationYInput.value = "" + this.mFurniture.getRotationY();
+            this.mScaleXInput.value = "" + this.mFurniture.getScaleX() * 100;
+            this.mScaleYInput.value = "" + this.mFurniture.getScaleY() * 100;
+            this.mScaleZInput.value = "" + this.mFurniture.getScaleZ() * 100;
+        }
         //_____________________________________________________________
         onClose() {
             this.mEditPanelDiv.style.display = "none";
             this.mEditorManager.isDragDropActive = false;
             this.mEditorManager.changeMeshColor(this.mFurniture.getModel(), 0xffffff);
+            this.mFurniture = null;
         }
         onDragDrop() {
             if (!this.mEditorManager.isDragDropActive) {
@@ -409,6 +438,7 @@ var room;
         deleteFernicher() {
             this.mEditPanelDiv.style.display = "none";
             this.mEditorManager.isDragDropActive = false;
+            this.mEditorManager.addToUndo(this.mFurniture);
             this.mEditorManager.deleteFernicher(this.mFurniture);
         }
     }
@@ -422,8 +452,8 @@ var room;
             this.mLast = null;
         }
         //___________________________________________________________
-        add(iFurnitureData, iFurnitureID) {
-            let aFurniture = new room.Furniture(iFurnitureData, iFurnitureID);
+        add(iFurnitureData, iFurnitureID, iUUId) {
+            let aFurniture = new room.Furniture(iFurnitureData, iFurnitureID, iUUId);
             if (this.mfirst == null) { ///////////////////////////
                 this.mfirst = aFurniture;
                 this.mLast = aFurniture;
@@ -505,6 +535,17 @@ var room;
                 i++;
             }
             return i;
+        }
+        //_____________________________________________________
+        findFurnitureByUUID(iUUID) {
+            let atemp = this.mfirst;
+            while (atemp != null) {
+                if (atemp.getUuId() == iUUID) {
+                    return atemp;
+                }
+                atemp = atemp.getNext();
+            }
+            return null;
         }
     }
     room.FurnitureNodeManager = FurnitureNodeManager;
@@ -902,28 +943,47 @@ var room;
             this.mItemDiv = iItemDiv;
             this.mSideMenuDiv = iSideMenuDiv;
             this.mSideMenuDiv.removeChild(this.mItemDiv);
-            room.FireBaseProxy.instance().loadFurnitureList((iItemsData) => this.buildSidePanel(iItemsData));
+            this.mFurnitureSearch = document.getElementById("IDFurnitureSearch");
+            this.mFurnitureSearch.oninput = () => this.onInput();
+            room.FireBaseProxy.instance().loadFurnitureList((iItemsData) => this.enterCatalogFromDataAndBuild(iItemsData));
         }
         //___________________________________________________________
-        buildSidePanel(iItemsData) {
-            this.mCatalog = iItemsData;
+        onInput() {
+            let aFilteredCatalog = {};
+            for (let key in this.mCatalog) {
+                if (this.mCatalog[key].name.toLowerCase().indexOf(this.mFurnitureSearch.value.toLowerCase()) > -1) {
+                    aFilteredCatalog[key] = this.mCatalog[key];
+                }
+            }
+            this.buildSidePanel(aFilteredCatalog);
+        }
+        //___________________________________________________________
+        buildSidePanel(iCatalog) {
+            this.mSideMenuDiv.innerHTML = "";
             const SPACE = 120;
             let aTop = 5;
             let aItem = this.mItemDiv.cloneNode(true);
-            for (let key in iItemsData) {
+            for (let key in iCatalog) {
                 aItem = this.mItemDiv.cloneNode(true);
                 let aLabels = aItem.getElementsByTagName("label");
                 let aImgs = aItem.getElementsByTagName("img");
-                aImgs[0].src = iItemsData[key].Thumbnails;
-                aLabels[0].innerHTML = iItemsData[key].name;
+                aImgs[0].src = iCatalog[key].Thumbnails;
+                aLabels[0].innerHTML = iCatalog[key].name;
                 aItem.style.top = aTop + "px";
                 this.mSideMenuDiv.appendChild(aItem);
                 aTop += SPACE;
                 aImgs[0].addEventListener("click", () => this.mEditorManager.sendFurnitureToBuild(key, this.mCatalog));
             }
         }
+        enterCatalogFromDataAndBuild(iItemsData) {
+            this.mCatalog = iItemsData;
+            this.buildSidePanel(this.mCatalog);
+        }
         getModelURL(iItemName) {
             return this.mCatalog[iItemName].model;
+        }
+        getCatalog() {
+            return this.mCatalog;
         }
     }
     room.SidePanel = SidePanel;
@@ -963,5 +1023,77 @@ var room;
         }
     }
     room.TopMenu = TopMenu;
+})(room || (room = {}));
+var room;
+(function (room) {
+    class UndoRedoManager {
+        constructor(iEditorManager, iSidePanel, iFindFurnitureFunction) {
+            this.mfirstUndo = null;
+            this.mfirstUndo = null;
+            this.UndoButton = document.getElementById("UndoButton");
+            this.UndoButton.onclick = () => this.Undo();
+            this.RedoButton = document.getElementById("RedoButton");
+            this.RedoButton.onclick = () => this.Redo();
+            this.mFindFurnitureFunction = iFindFurnitureFunction;
+            this.mEditorManager = iEditorManager;
+            this.mSidePanel = iSidePanel;
+        }
+        //___________________________________________________________
+        addToUndo(iFurnitureData, iFurnitureID, iUUID) {
+            let aFurniture = new room.Furniture(iFurnitureData, iFurnitureID, iUUID);
+            aFurniture.setNext(this.mfirstUndo);
+            this.mfirstUndo = aFurniture;
+        }
+        //___________________________________________________________
+        addToRedo(iFurnitureData, iFurnitureID, iUUID) {
+            let aFurniture = new room.Furniture(iFurnitureData, iFurnitureID, iUUID);
+            aFurniture.setNext(this.mfirstRedo);
+            this.mfirstRedo = aFurniture;
+        }
+        //__________________________________________________
+        Undo() {
+            if (this.mfirstUndo != null) {
+                let aToUndo = this.mfirstUndo;
+                this.mfirstUndo = this.mfirstUndo.getNext();
+                this.addToRedo(aToUndo.getObject(), aToUndo.getIndexData(), aToUndo.getUuId());
+                if (this.mFindFurnitureFunction(aToUndo.getUuId()) != null) { //�� ����
+                    let iNew = this.mFindFurnitureFunction(aToUndo.getUuId());
+                    iNew.CopyFrom(aToUndo);
+                    iNew.UpdateModel();
+                    this.mEditorManager.updatePanelByObject();
+                    room.FireBaseProxy.instance().updateFurnitureData(iNew.getIndexData().toString(), aToUndo.getObject());
+                }
+                else { //��� ����
+                    this.mEditorManager.sendFurnitureToBuild(aToUndo.getName(), this.mSidePanel.getCatalog(), aToUndo.getUuId());
+                    let iNew = this.mFindFurnitureFunction(aToUndo.getUuId());
+                    iNew.CopyFrom(aToUndo);
+                    iNew.UpdateModel();
+                    room.FireBaseProxy.instance().updateFurnitureData((iNew.getIndexData()).toString(), aToUndo.getObject());
+                }
+            }
+        }
+        Redo() {
+            if (this.mfirstRedo != null) {
+                let aToRedo = this.mfirstRedo;
+                this.mfirstRedo = this.mfirstRedo.getNext();
+                this.addToUndo(aToRedo.getObject(), aToRedo.getIndexData(), aToRedo.getUuId());
+                if (this.mFindFurnitureFunction(aToRedo.getUuId()) != null) { //�� ����
+                    let iNew = this.mFindFurnitureFunction(aToRedo.getUuId());
+                    iNew.CopyFrom(aToRedo);
+                    iNew.UpdateModel();
+                    this.mEditorManager.updatePanelByObject();
+                    room.FireBaseProxy.instance().updateFurnitureData(iNew.getIndexData().toString(), aToRedo.getObject());
+                }
+                else { //��� ����
+                    this.mEditorManager.sendFurnitureToBuild(aToRedo.getName(), this.mSidePanel.getCatalog(), aToRedo.getUuId());
+                    let iNew = this.mFindFurnitureFunction(aToRedo.getUuId());
+                    iNew.CopyFrom(aToRedo);
+                    iNew.UpdateModel();
+                    room.FireBaseProxy.instance().updateFurnitureData((iNew.getIndexData()).toString(), aToRedo.getObject());
+                }
+            }
+        }
+    }
+    room.UndoRedoManager = UndoRedoManager;
 })(room || (room = {}));
 //# sourceMappingURL=code.js.map
